@@ -1,0 +1,25 @@
+.footer-bg {
+  background: var(--g1);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.logo-copy img {
+  margin-bottom: 40px;
+}
+
+.contact h3 {
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 20px;
+}

@@ -1,0 +1,87 @@
+:root {
+  --g1: #FFFFFF;
+  --g2: #F7F7F7;
+  --g3: #EDEDED;
+  --g4: #DEDEDE;
+  --g5: #CCCCCC;
+  --g6: #B2B2B2;
+  --g7: #9C9C9C;
+  --g8: #717171;
+  --g9: #595959;
+  --g10: #404040;
+  --g11: #2e2e2e;
+  --g12: #111111;
+  --g13: #000000;
+  --p1: #FB01B3;
+  --p2: #D11F9E;
+  --p3: #9F0071;
+  --p4: #883570;
+}
+
+:root.dark-mode {
+  --g1: #000000;
+  --g2: #111111;
+  --g3: #2E2E2E;
+  --g4: #404040;
+  --g5: #595959;
+  --g6: #717171;
+  --g7: #9C9C9C;
+  --g8: #B2B2B2;
+  --g9: #CCCCCC;
+  --g10: #DEDEDE;
+  --g11: #EDEDED;
+  --g12: #F7F7F7;
+  --g13: #FFFFFF;
+  --p1: #FB01B3;
+  --p2: #FB01B3;
+  --p3: #FB01B3;
+  --p4: #FB01B3;
+}
+
+
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li,
+a {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--g2);
+  font-family: 'Fira Sans', sans-serif;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Textos para o light-mode */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+.general-btn {
+  padding: 10px 20px;
+  background: #883570;
+  border-radius: 4px;
+  border: none;
+  color: #fff;
+  font: bold 1rem/1.5 'Fira Sans', sans-serif;
+  cursor: pointer;
+  text-transform: uppercase;
+}

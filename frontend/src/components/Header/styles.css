@@ -1,0 +1,73 @@
+.header-bg {
+  background-color: var(--g1);
+
+}
+
+.header {
+  padding-top: 72px;
+  padding-bottom: 24px;  
+}
+
+.main-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  padding-bottom: 40px; 
+}
+
+
+.logo {
+  flex: 2;
+}
+
+.search {
+  flex: 5;
+}
+
+.searchInput {
+  width: 460px;
+  border: none;
+  border-bottom: 2px solid var(--g3);
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
+  color: var(--g13);
+  background: var(--g1);
+}
+
+.searchInput::placeholder {
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
+  color: var(--g9);
+}
+
+.searchInput:focus {
+  outline: none;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 40px;
+  flex: 5;
+}
+
+.login-btn {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--g13);
+}
+
+.categories {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  align-items: center;
+}
+
+.categories a {
+  color: var(--g13);
+}
+
+.sex-shop-cat {
+  color: var(--p1) !important;
+}

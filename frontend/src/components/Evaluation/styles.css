@@ -1,0 +1,43 @@
+.evaluation-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--g9);
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.ev-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ev-profile img {
+  width: 80px;
+  align-self: center;
+}
+
+.ev-profile p {
+  font-size: 1rem;
+  color: var(--g9);
+}
+
+.ev-profile p span {
+  color: var(--g13);
+}
+
+.ev-text {
+  max-width: 560px;
+}
+
+.ev-text blockquote {
+  font-size: 1rem;
+  color: var(--g13);
+}
+
+.ev-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
