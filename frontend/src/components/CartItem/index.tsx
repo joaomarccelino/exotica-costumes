@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import CloseIcon from '../../assets/img/close-icon.svg';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { formatPrice } from '../../utils/formatPrice';
 import { AmountInput } from '../AmountInput';
 
 import './styles.css';
@@ -12,22 +13,21 @@ export type CartItemProps = {
 
 export function CartItem({ image, price, amount, name }: CartItemProps) {
   const [totalPrice, setTotalPrice] = useState(price * amount);
-  const cartPrice = price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace('.', ',');
   return (
     <div className="cart-item">
       <div className="cart-info">
         <img src={image} alt="" />
-        <span>{`R$ ${cartPrice}`}</span>
+        <span>{`R$ ${formatPrice(price)}`}</span>
       </div>
       <div><span className={"item-name"}>{name}</span></div>
       <AmountInput amountProp={3} />
       <div className="cart-price">
         <span>Valor total</span>
         <span className="total-price">
-          {`R$ ${(totalPrice).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace('.', ',')}`}
+          {`R$ ${formatPrice(totalPrice)}`}
         </span>
       </div>
-      <img src={CloseIcon} alt="Excluir" />
+      <AiOutlineCloseCircle size={32} color={"red"} style={{marginLeft: '20px'}} />
     </div>
   )
 }

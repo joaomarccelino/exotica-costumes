@@ -1,34 +1,48 @@
 import Logo from '../../assets/img/light-logo.svg';
 import DarkLogo from '../../assets/img/dark-logo.svg';
-import Whats from '../../assets/img/whats.svg';
-import Insta from '../../assets/img/insta.svg';
-import Gmail from '../../assets/img/gmail.svg';
-import Face from '../../assets/img/face.svg';
+import SexShopLogo from '../../assets/img/sexshop-logo.svg';
+
+import { BsWhatsapp, BsInstagram, BsFacebook } from 'react-icons/bs';
+import { CgMail } from 'react-icons/cg';
+
 import './styles.css';
+import { useStyle } from '../../hooks/StyleContext';
 
 export function Footer() {
+
+  const { theme } = useStyle();
+
+  function handleLogo() {
+    if (theme === 'dark') {
+      return DarkLogo;
+    } else if (theme === 'sexshop') {
+      return SexShopLogo;
+    } else {
+      return Logo;
+    }
+  }
   return (
     <footer className="footer-bg">
       <div className="footer container">
         <div className="logo-copy">
-          <a href=""><img src={Logo} alt="" /></a>
+          <a href="/"><img src={handleLogo()} alt="" /></a>
           <p>© 2022 Exótica Costumes. Todos direitos reservados.</p>
         </div>
         <div className="contact">
           <h3>Contato</h3>
           <div className="social-icons">
-            <a href="">
-              <img src={Whats} alt="Whatsapp" />
-            </a>
-            <a href="">
-              <img src={Insta} alt="Instagram" />
-            </a>
-            <a href="">
-              <img src={Gmail} alt="Gmail" />
-            </a>
-            <a href="">
-              <img src={Face} alt="Facebook" />
-            </a>
+            <button className="empty-btn">
+              <BsWhatsapp size={24} color={"var(--p4)"} />
+            </button>
+            <button className="empty-btn">
+              <BsInstagram size={24} color={"var(--p4)"} />
+            </button>
+            <button className="empty-btn">
+              <CgMail size={24} color={"var(--p4)"} />
+            </button>
+            <button className="empty-btn">
+              <BsFacebook size={24} color={"var(--p4)"} />
+            </button>
           </div>
         </div>
       </div>

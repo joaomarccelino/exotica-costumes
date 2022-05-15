@@ -14,9 +14,18 @@
   margin-bottom: 40px;
 }
 
+.logo-copy p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--g9);
+}
+
 .contact h3 {
   text-transform: uppercase;
   margin-bottom: 40px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--g13);
 }
 
 .social-icons {

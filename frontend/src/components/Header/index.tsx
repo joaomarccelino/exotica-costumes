@@ -1,19 +1,40 @@
 import Logo from '../../assets/img/light-logo.svg';
 import DarkLogo from '../../assets/img/dark-logo.svg';
-import Sign from '../../assets/img/sign-icon.svg';
-import Cart from '../../assets/img/cart.svg';
-import Fav from '../../assets/img/fav-btn.svg';
-import Light from '../../assets/img/light-button.svg'
+import SexShopLogo from '../../assets/img/sexshop-logo.svg';
+
+import { FaRegUser } from 'react-icons/fa';
+
+import { AiOutlineShoppingCart, AiOutlineHeart, AiOutlineBulb } from 'react-icons/ai';
 
 import './styles.css';
-import { useState } from 'react';
+import { useStyle } from '../../hooks/StyleContext';
 
 export function Header() {
-  const [night, setNight] = useState(false);
+  const { theme, handleSexShop, handleRemoveSexShop, handleNight } = useStyle();
 
-  function nightMode() {
-    document.documentElement.classList.toggle('dark-mode');
-    setNight(!night);
+  function handleShowSignIn() {
+    const signModal = document.querySelector('.sign-bg')
+    signModal?.classList.add('active');
+  }
+
+  function handleShowCart() {
+    const cartModal = document.querySelector('.cart-modal')
+    cartModal?.classList.add('active');
+  }
+
+  function handleShowFav() {
+    const favModal = document.querySelector('.fav-modal')
+    favModal?.classList.add('active');
+  }
+
+  function handleLogo() {
+    if (theme === 'dark') {
+      return DarkLogo;
+    } else if (theme === 'sexshop') {
+      return SexShopLogo;
+    } else {
+      return Logo;
+    }
   }
 
   return (
@@ -21,36 +42,73 @@ export function Header() {
       <div className="container header">
         <div className="main-menu">
           <a href="/" className="logo">
-            <img src={night ? DarkLogo : Logo} alt="Exótica" />
+            <img src={handleLogo()} alt="Exótica" />
           </a>
           <form action="" className="search">
             <input type="text" placeholder="O que você procura?" className="searchInput" />
           </form>
           <div className="actions">
-            <a href="/" className="login-btn">
-              <img src={Sign} alt="." />
+            <button
+              className="login-btn header-btn"
+              onClick={() => handleShowSignIn()}
+            >
+              <div className="login-btn-icon">
+                <FaRegUser size={20} color={"var(--p2)"} />
+              </div>
               <span>Login ou Cadastro</span>
-            </a>
-            <a href="/">
-              <img src={Cart} alt="Carrinho" />
-            </a>
-            <a href="/">
-              <img src={Fav} alt="Favoritos" />
-            </a>
-            <a onClick={() => nightMode()}>
-              <img src={Light} alt="Modo Claro/Escuro" />
-            </a>
+            </button>
+            <button
+              className="header-btn"
+              onClick={() => handleShowCart()}
+            >
+              <div className="header-icon">
+                <AiOutlineShoppingCart size={25} color="#fff" />
+              </div>
+            </button>
+            <button
+              className="header-btn"
+              onClick={() => handleShowFav()}
+            >
+              <div className="header-icon">
+                <AiOutlineHeart size={25} color="#FFF" />
+              </div>
+            </button>
+            <button onClick={handleNight} className="header-btn">
+              <div className="header-icon n-mode">
+                <AiOutlineBulb size={25} color="var(--p2)" />
+              </div>
+            </button>
           </div>
         </div>
-        <div className="categories">
-          <a href="/">SUTIÃ</a>
-          <a href="/">CALCINHA</a>
-          <a href="/">BODY</a>
-          {night ? <a href="" className="sex-shop-cat">SEX-SHOP</a> : ''}
-          <a href="/">MODELADOR</a>
-          <a href="/">PLUS</a>
-          <a href="/">FITNESS</a>
-        </div>
+        {theme === 'sexshop' ?
+          <div className="sexshop-categories">
+            <a href="/">ESTIMULANTES</a>
+            <a href="/">MASSAGEM</a>
+            <button
+              className=" empty-btn sex-shop-cat"
+              onClick={handleRemoveSexShop}
+            >
+              MODA ÍNTIMA
+            </button>
+            <a href="/">FANTASIAS</a>
+            <a href="/">PRÓTESES</a>
+          </div>
+          :
+          <div className="categories">
+            <a href="/">SUTIÃ</a>
+            <a href="/">CALCINHA</a>
+            <a href="/">BODY</a>
+            {theme === 'dark' &&
+              <button className="empty-btn sex-shop-cat"
+                onClick={handleSexShop}>
+                SEX-SHOP
+              </button>
+            }
+            <a href="/">MODELADOR</a>
+            <a href="/">PLUS</a>
+            <a href="/">FITNESS</a>
+          </div>
+        }
       </div>
     </header>
   )

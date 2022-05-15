@@ -38,6 +38,13 @@
   --p4: #FB01B3;
 }
 
+:root.dark-mode.sexshop {
+  --p1: #FF3333;
+  --p2: #FF3333;
+  --p3: #FF3333;
+  --p4: #FF3333;
+}
+
 
 body,
 h1,
@@ -56,6 +63,7 @@ body {
   font-family: 'Fira Sans', sans-serif;
 }
 
+
 img {
   max-width: 100%;
   display: block;
@@ -64,6 +72,22 @@ img {
 a {
   text-decoration: none;
 }
+
+.empty-btn {
+  background: none;
+  border: none; 
+  cursor: pointer;
+}
+
+@keyframes show-modal {
+  from {
+    right: -800px;
+  }
+  to {
+    right: 0;
+  }
+}
+
 
 /* Textos para o light-mode */
 
@@ -84,4 +108,8 @@ a {
   font: bold 1rem/1.5 'Fira Sans', sans-serif;
   cursor: pointer;
   text-transform: uppercase;
+}
+
+:root.dark-mode.sexshop .general-btn {
+  background: var(--p1);
 }

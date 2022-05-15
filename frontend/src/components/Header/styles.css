@@ -8,6 +8,12 @@
   padding-bottom: 24px;  
 }
 
+.header-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .main-menu {
   display: flex;
   align-items: center;
@@ -54,7 +60,35 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  color: var(--g13);
+  color: var(--g11);
+  cursor: pointer;
+  font: bold 1rem/1.1 'Fira Sans', sans-serif;
+  
+}
+
+.login-btn-icon {
+  border: 1px solid var(--p2);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--p2);
+}
+
+.header-icon.n-mode {
+  background: none;
+  border: 1px solid var(--p2);
 }
 
 .categories {
@@ -64,10 +98,22 @@
   align-items: center;
 }
 
+
 .categories a {
   color: var(--g13);
 }
 
 .sex-shop-cat {
   color: var(--p1) !important;
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
+}
+
+.sexshop-categories {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  align-items: center;
+}
+.sexshop-categories a {
+  color: var(--g13);
 }

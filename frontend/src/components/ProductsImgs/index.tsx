@@ -8,14 +8,9 @@ export function ProductImgs() {
 
   const thumbs = document.querySelectorAll('.thumbImg')
 
-  thumbs.forEach(item => {
-    item.addEventListener('click', selectImage)
-  })
-
   function selectImage(e: any) {
     const showImg = document.querySelector('.mainProductImg') as HTMLImageElement;
     showImg.src = e.target.src;
-    console.log(e.target)
     thumbs.forEach(item => {
       if (item === e.target) {
         item.classList.add('selected-img');
@@ -24,12 +19,16 @@ export function ProductImgs() {
       }
     });
   }
-  
+  thumbs.forEach(item => {
+    item.addEventListener('click', selectImage)
+  })
+
+
   return (
     <div className="product-images">
       <img src={Prod1} alt="Image 1" className="mainProductImg" />
       <div className="product-thumbs">
-        <img src={Prod1} alt="" className="thumbImg" />
+        <img src={Prod1} alt="" className="thumbImg selected-img" />
         <img src={Prod2} alt="" className="thumbImg" />
         <img src={Prod3} alt="" className="thumbImg" />
       </div>

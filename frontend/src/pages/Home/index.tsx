@@ -63,6 +63,9 @@ export function Home() {
           )
         })}
       </div>
+      <div className="news">
+        <h2>Últimas Novidades</h2>
+      </div>
     </main>
 
   )

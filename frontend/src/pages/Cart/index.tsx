@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import CartImg from '../../assets/img/prod-test1.jpg';
-import CreditCard from '../../assets/img/credit-card.svg';
-import Ticket from '../../assets/img/ticket.svg';
+
+import { BsCreditCard } from 'react-icons/bs';
+
+import {RiBillLine} from 'react-icons/ri';
+
 import { months, years, paymentOptions } from '../../utils/commonData';
 
 import { CartItem } from '../../components/CartItem';
 import './styles.css';
+import { formatPrice } from '../../utils/formatPrice';
 export function Cart() {
   const [totalValue, setTotalValue] = useState(0);
   const [shipping, setShipping] = useState(56.50);
@@ -61,15 +65,15 @@ export function Cart() {
           <h2>Resumo do pedido</h2>
           <div className="subtotal">
             <span>Subtotal: </span>
-            <span className="subtotal-price">{`R$ ${totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace('.', ',')}`}</span>
+            <span className="subtotal-price">{`R$ ${formatPrice(totalValue)}`}</span>
           </div>
           <div className="shipping">
             <span>Frete: </span>
-            <span className="shipping-price">{`R$ ${shipping.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace('.', ',')}`}</span>
+            <span className="shipping-price">{`R$ ${formatPrice(shipping)}`}</span>
           </div>
           <div className="total-value">
             <span>Total: </span>
-            <span>{`R$ ${(shipping + totalValue).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace('.', ',')}`}</span>
+            <span>{`R$ ${formatPrice(shipping + totalValue)}`}</span>
           </div>
         </div>
       </div>
@@ -95,7 +99,7 @@ export function Cart() {
             <h3>Forma de pagamento</h3>
             <div className="payment-input">
               <input type="radio" name="payment-option" id="credit-card" />
-              <label htmlFor="credit-card"><img src={CreditCard} alt="" /> Cartão de Crédito</label>
+              <label htmlFor="credit-card"><BsCreditCard size={25} color={"var(--p4)"}/> Cartão de Crédito</label>
             </div>
             <div className="credit-form">
               <div className="card-number">
@@ -144,14 +148,14 @@ export function Cart() {
             </div>
             <div className="payment-input">
               <input type="radio" name="payment-option" id="pix" />
-              <label htmlFor="pix"><img src={Ticket} alt="" /> Pix</label>
+              <label htmlFor="pix"><RiBillLine size={25} color={"var(--p4)"}/> Pix</label>
             </div>
             <div className="pix-form">
               <h4>pix</h4>
             </div>
             <div className="payment-input">
               <input type="radio" name="payment-option" id="ticket" />
-              <label htmlFor="ticket"><img src={Ticket} alt="" /> Boleto</label>
+              <label htmlFor="ticket"><RiBillLine size={25} color={"var(--p4)"}/> Boleto</label>
             </div>
             <div className="ticket-form">
               <h4>Boleto</h4>

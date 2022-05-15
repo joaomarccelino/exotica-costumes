@@ -1,9 +1,6 @@
-import Like from '../../assets/img/like.svg';
-import Dislike from '../../assets/img/dislike.svg';
-import FillLike from '../../assets/img/filled-like.svg';
-import FillDislike from '../../assets/img/filled-dislike.svg';
 import Sign from '../../assets/img/sign-icon.svg';
-
+import { BiLike, BiDislike } from 'react-icons/bi';
+import {FaRegUser} from 'react-icons/fa';
 import './styles.css';
 
 export type EvaluationProps = {
@@ -15,10 +12,21 @@ export type EvaluationProps = {
 }
 
 export function Evaluation({ by, on, text, like, dislike }: EvaluationProps) {
+
+  function handleSetLike() {
+
+  }
+
+  function handleSetDislike() {
+    
+  }
+
   return (
     <div className="evaluation-container">
       <div className="ev-profile">
-        <img src={Sign} alt="" />
+        <div className="ev-icon">
+          <FaRegUser size={40} color={"var(--p2)"} />
+        </div>
         <p>Por: <span>{by}</span></p>
         <p>Em: <span>{on}</span></p>
       </div>
@@ -28,12 +36,12 @@ export function Evaluation({ by, on, text, like, dislike }: EvaluationProps) {
         </blockquote>
       </div>
       <div className="ev-actions">
-        <a href="">
-          <img src={like ? FillLike : Like} alt="" />
-        </a>
-        <a href="">
-          <img src={dislike ? FillDislike : Dislike} alt="" />
-        </a>
+        <button className="empty-btn">
+          <BiLike color={like ? 'var(--p2)' : 'var(--g8)'} size={40} />
+        </button>
+        <button className="empty-btn">
+          <BiDislike color={dislike ? 'var(--p2)' : 'var(--g8)'} size={40} />
+        </button>
       </div>
     </div>
   )

@@ -1,0 +1,104 @@
+.sign-bg {
+  height: 100vh;
+  width: 100%; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  display: none;
+  animation: show-modal-up .8s;
+  transition: ease 1s;
+}
+
+.sign-bg.active {
+  display: initial;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.sign-modal {
+  box-sizing: border-box;
+  padding: 40px 140px;
+  background: var(--g2);
+  max-width: 840px;
+  margin: 120px auto;
+  border-radius: 4px;
+  position: relative;
+}
+
+.sign-modal h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--p4);
+  margin-bottom: 40px;
+}
+
+.sign-modal input, .sign-modal label {
+  display: block;
+}
+
+.sign-modal input {
+  border: 1px solid #ededed;
+  border-radius: 4px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+  height: 36px;
+  margin-bottom: 20px;
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
+  width: 100%;
+}
+
+.sign-modal p {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--g13);
+  text-align: center;
+}
+
+.sign-modal p a {
+  color: var(--p4);
+  cursor: pointer;
+}
+
+.sign-modal button {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.sign-form label{
+  color: var(--g8);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.tel-cpf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sign-btn {
+  text-align: center;
+}
+
+.close-button {
+  color: red;
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes show-modal-up {
+  from {
+    top: -800px;
+    background: none;
+  }
+  to {
+    top: 0;    
+  }
+}

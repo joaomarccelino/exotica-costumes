@@ -130,6 +130,10 @@ select {
   gap: 20px;
 }
 
+.payment-input input {
+  margin-bottom: 0;
+}
+
 .payment-input label {
   display: flex;
   align-items: center;

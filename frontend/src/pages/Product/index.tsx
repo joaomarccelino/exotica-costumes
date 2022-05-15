@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import Fav from '../../assets/img/fav-btn.svg';
+import { AiOutlineHeart } from 'react-icons/ai';
+
 import './styles.css';
 import { Evaluation } from '../../components/Evaluation';
 import { ProductImgs } from '../../components/ProductsImgs';
 import { AmountInput } from '../../components/AmountInput';
+import { formatPrice } from '../../utils/formatPrice';
 
 export function Product() {
   const [size, setSize] = useState<number>(0);
@@ -51,20 +53,21 @@ export function Product() {
       dislike: false
     }
   ]
-
-
-  const productPrice = productTest.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   return (
     <>
       <main className="product container">
         <ProductImgs />
         <div className="product-info">
-          <a href="">
-            <img src={Fav} alt="" />
-          </a>
+          <button
+            className="header-btn"
+          >
+            <div className="header-icon">
+              <AiOutlineHeart size={25} color="#FFF" />
+            </div>
+          </button>
           <h1>{productTest.name}</h1>
           <span className="price-title">a partir de</span>
-          <span className="prod-price">{`R$ ${productPrice.replace('.', ',')}`}</span>
+          <span className="prod-price">{`R$ ${formatPrice(productTest.price)}`}</span>
           <span className="sizes-title">Escolha o tamanho</span>
           <div className="sizes">
             {productTest.sizes.map(item => {
@@ -75,7 +78,7 @@ export function Product() {
               )
             })}
           </div>
-            <AmountInput amountProp={amount} />
+          <AmountInput amountProp={amount} />
           <button className="general-btn">COMPRAR</button>
         </div>
       </main>
