@@ -1,32 +1,37 @@
 import { useState } from "react";
-import Filled from '../../assets/img/filled-heart.svg';
-import Unfilled from '../../assets/img/unfilled-heart.svg';
 
 import { AiOutlineHeart } from 'react-icons/ai';
 
 import './styles.css';
 import { formatPrice } from "../../utils/formatPrice";
-export type CardProps = {
-  image: string;
-  name: string;
-  value: number;
-}
+import { Link } from "react-router-dom";
+import { ProductProps } from "../../pages/Home";
 
-export function ProductCard({ image, name, value }: CardProps) {
+export function ProductCard({ id, name, image, images, price, sizes, evaluations }: ProductProps) {
+  const product = ({
+    id,
+    name,
+    image,
+    images,
+    price,
+    sizes,
+    evaluations
+  })
   const [flagged, setFlagged] = useState(false);
-  const portion = (value / 3);
+  const portion = (price / 3);
+  const url = name.toLowerCase().replaceAll(' ', '-');
 
   function handleFlagItem() {
     setFlagged(!flagged);
   }
   return (
     <div className="product-card">
-      <a href="/product">
-        <img src={image} alt={name} />
-      </a>
-      <span className="card-prod-price">{`R$ ${formatPrice(value)}`}</span>
+      <Link to={`/${url}`} state={{ product }}>
+        <img src={`/assets/${image}`} alt={name} />
+      </Link>
+      <span className="card-prod-price">{`R$ ${formatPrice(price)}`}</span>
       <p>em <span className="color-text">{`até 3x de R$ ${formatPrice(portion)} sem juros`}</span></p>
-      <a href="/product">{name}</a>
+      <Link to={`/${url}`} state={{ product }}>{name}</Link>
       <button className="fav-btn" onClick={() => handleFlagItem()}>
         <div className={flagged ? "filled-heart" : "unfilled-heart"}>
           <AiOutlineHeart size={25} color={flagged ? "#FFF" : "var(--p2)"} />

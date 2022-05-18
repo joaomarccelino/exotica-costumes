@@ -1,62 +1,60 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { createContext, ReactNode, useEffect } from "react"
-import { usePersistedState } from "../../utils/usePersistedState";
+import { CartItemProps } from "../../components/CartItem";
+import { FavItemProps } from "../../components/FavItem";
 
-type AuthContextType = {
-  theme: string;
-  handleSexShop(): void;
-  handleRemoveSexShop(): void;
-  handleNight(): void;
+type ProductContextType = {
+  cartItems: CartItemProps[];
+  favItems: FavItemProps[];
+  handleAddItemToCart(cartItem: CartItemProps): void;
+  handleAddFavItem(favItem: FavItemProps): void;
 }
 
-type AuthContextProps = {
+type ProductContextProps = {
   children: ReactNode;
 }
 
-export const AuthContext = createContext({} as AuthContextType)
+export const ProductContext = createContext({} as ProductContextType)
 
-export function StyleContextProvider({ children }: AuthContextProps) {
-  const [theme, setTheme] = usePersistedState<string>('theme', 'dark')
+export function ProductContextProvider({ children }: ProductContextProps) {
+  const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
+  const [favItems, setFavItems] = useState<FavItemProps[]>([]);
 
+  function getCartItems() {
+    const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');
+    cartData && setCartItems(cartData);
+  }
+
+  function getFavItems() {
+    const favData = JSON.parse(localStorage.getItem('favItem') || '[]');
+    favData && setFavItems(favData);
+  }
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark-mode')
-      document.documentElement.classList.remove('sexshop')
-    } else if (theme === 'sexshop') {
-      document.documentElement.classList.add('dark-mode')
-      document.documentElement.classList.add('sexshop')
-    }
-    else {
-      document.documentElement.classList.remove('dark-mode')
-      document.documentElement.classList.remove('sexshop')
-    }
-  }, [theme])
+    getCartItems();
+    getFavItems();
+  }, [cartItems, favItems]);
 
-  function handleSexShop() {
-    setTheme(theme === 'dark' ? 'sexshop' : 'dark');
+  function handleAddItemToCart(cartItem: CartItemProps) {
+    const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');
+    localStorage.setItem('cartItem', JSON.stringify([...cartData, cartItem]));
+    alert("Item adicionado com sucesso!");
   }
 
-  function handleRemoveSexShop() {
-    setTheme(theme === 'sexshop' ? 'dark' : 'sexshop');
+  function handleAddFavItem(favItem: FavItemProps) {
+    const favData = JSON.parse(localStorage.getItem('favItem') || '[]');
+    localStorage.setItem('favItem', JSON.stringify([...favData, favItem]));
+    alert("Item adicionado com sucesso!");
   }
 
-  function handleNight() {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-    setTheme(theme === 'sexshop' ? 'light' : 'dark');
-    if (theme ==='dark' || theme === 'sexshop') {
-      setTheme('light');
-    } else {
-      setTheme('dark');
-    }
-  }
+
 
   return (
-    <AuthContext.Provider value={{ theme, handleSexShop, handleRemoveSexShop, handleNight }}>
+    <ProductContext.Provider value={{ cartItems, favItems, handleAddItemToCart, handleAddFavItem }}>
       {children}
-    </AuthContext.Provider>
+    </ProductContext.Provider>
   )
 }
 
-export const useStyle = () => {
-  return useContext(AuthContext)
+export const useProducts = () => {
+  return useContext(ProductContext)
 }

@@ -1,0 +1,9 @@
+.slide {
+  display: flex;
+  list-style: none;
+  overflow: hidden;
+}
+
+.slide li {
+  width: 100vw;
+}

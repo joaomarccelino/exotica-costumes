@@ -6,11 +6,29 @@ import { Evaluation } from '../../components/Evaluation';
 import { ProductImgs } from '../../components/ProductsImgs';
 import { AmountInput } from '../../components/AmountInput';
 import { formatPrice } from '../../utils/formatPrice';
+import { useLocation } from 'react-router-dom';
+import { ProductProps } from '../Home';
+
+import { useProducts } from '../../hooks/ProductContext';
+
+type ProductData = {
+  product: ProductProps;
+}
+
 
 export function Product() {
   const [size, setSize] = useState<number>(0);
   const [amount, setAmount] = useState(0);
+  const [flagged, setFlagged] = useState(false);
 
+  const { handleAddItemToCart, handleAddFavItem } = useProducts();
+
+  const location = useLocation();
+
+  const data = location.state as ProductData;
+
+  const product = data.product;  
+  
   function selectSize(size: number) {
     const sizes = document.querySelectorAll('.size');
     sizes.forEach(item => {
@@ -23,36 +41,14 @@ export function Product() {
     })
   }
 
-  const productTest = {
-    name: 'Body Em Microfibra E Renda White Party',
-    price: 69.90,
-    sizes: [38, 40, 42, 44, 46, 48],
+  const newItem = { id: product.id, name: product.name, image: product.image, amount, price: product.price }
+  const newFav = {id: product.id, name: product.name, image: product.image, price: product.price}
+
+  function handleFlagItem() {
+    setFlagged(!flagged);
+    handleAddFavItem(newFav);
   }
 
-
-  const evalTest = [
-    {
-      by: "Giovanni Rios Barros",
-      on: "08/05/2022",
-      text: "Comprei esse sutiã após experimentar e comprar em loja física. Gostei tanto que comprei de outras cores no site. Me surpreendeu a qualidade do material, o conforto que ele oferece e o quanto veste bem. Com certeza me tornei consumidora fiel da marca. ",
-      like: false,
-      dislike: false
-    },
-    {
-      by: "Giovanni Rios Barros",
-      on: "08/05/2022",
-      text: "Comprei esse sutiã após experimentar e comprar em loja física. Gostei tanto que comprei de outras cores no site. Me surpreendeu a qualidade do material, o conforto que ele oferece e o quanto veste bem. Com certeza me tornei consumidora fiel da marca. ",
-      like: false,
-      dislike: false
-    },
-    {
-      by: "Giovanni Rios Barros",
-      on: "08/05/2022",
-      text: "Comprei esse sutiã após experimentar e comprar em loja física. Gostei tanto que comprei de outras cores no site. Me surpreendeu a qualidade do material, o conforto que ele oferece e o quanto veste bem. Com certeza me tornei consumidora fiel da marca. ",
-      like: false,
-      dislike: false
-    }
-  ]
   return (
     <>
       <main className="product container">
@@ -60,26 +56,33 @@ export function Product() {
         <div className="product-info">
           <button
             className="header-btn"
+            onClick={() => handleFlagItem()}
           >
-            <div className="header-icon">
-              <AiOutlineHeart size={25} color="#FFF" />
+            <div className={flagged ? "filled-heart" : "unfilled-heart"}>
+              <AiOutlineHeart size={25} color={flagged ? "#FFF" : "var(--p2)"} />
             </div>
           </button>
-          <h1>{productTest.name}</h1>
+          <h1>{product.name}</h1>
           <span className="price-title">a partir de</span>
-          <span className="prod-price">{`R$ ${formatPrice(productTest.price)}`}</span>
+          <span className="prod-price">{`R$ ${formatPrice(product.price)}`}</span>
           <span className="sizes-title">Escolha o tamanho</span>
           <div className="sizes">
-            {productTest.sizes.map(item => {
+            {product.sizes.map(item => {
               return (
-                <button className="size" onClick={() => selectSize(item)}>
-                  {item}
+                item.available > 0 &&
+                <button className="size" onClick={() => selectSize(item.size)}>
+                  {item.size}
                 </button>
               )
             })}
           </div>
           <AmountInput amountProp={amount} />
-          <button className="general-btn">COMPRAR</button>
+          <button
+            className="general-btn"
+            onClick={() => handleAddItemToCart(newItem)}
+          >
+            COMPRAR
+          </button>
         </div>
       </main>
       <section className="container description">
@@ -97,7 +100,7 @@ export function Product() {
       <section className="container evaluations-container">
         <h2>Avaliações</h2>
         <div className="evaluations">
-          {evalTest.map(item => {
+          {product.evaluations.map(item => {
             return (
               <Evaluation
                 by={item.by}

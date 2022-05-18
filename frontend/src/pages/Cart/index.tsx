@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import CartImg from '../../assets/img/prod-test1.jpg';
 
 import { BsCreditCard } from 'react-icons/bs';
 
@@ -10,6 +9,7 @@ import { months, years, paymentOptions } from '../../utils/commonData';
 import { CartItem } from '../../components/CartItem';
 import './styles.css';
 import { formatPrice } from '../../utils/formatPrice';
+import { useProducts } from '../../hooks/ProductContext';
 export function Cart() {
   const [totalValue, setTotalValue] = useState(0);
   const [shipping, setShipping] = useState(56.50);
@@ -25,26 +25,8 @@ export function Cart() {
     calcTotalValue()
   }, [])
 
-  const cartItems = [
-    {
-      image: CartImg,
-      price: 99.90,
-      name: 'Body Em Microfibra E Renda White Party',
-      amount: 3,
-    },
-    {
-      image: CartImg,
-      price: 99.90,
-      name: 'Body Em Microfibra E Renda White Party',
-      amount: 3,
-    },
-    {
-      image: CartImg,
-      price: 99.90,
-      name: 'Body Em Microfibra E Renda White Party',
-      amount: 3,
-    }
-  ]
+  const { cartItems } = useProducts();
+
   return (
     <div className="cart container">
       <h1>Finalizar Compra</h1>
@@ -53,6 +35,7 @@ export function Cart() {
           {cartItems.map(item => {
             return (
               <CartItem
+                id={item.id}
                 image={item.image}
                 price={item.price}
                 name={item.name}

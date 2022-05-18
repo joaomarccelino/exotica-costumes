@@ -4,19 +4,21 @@ import { formatPrice } from '../../utils/formatPrice';
 import { AmountInput } from '../AmountInput';
 
 import './styles.css';
+
 export type CartItemProps = {
+  id: string;
   image: string;
   price: number;
   amount: number;
   name: string;
 }
 
-export function CartItem({ image, price, amount, name }: CartItemProps) {
+export function CartItem({ id, image, price, amount, name }: CartItemProps) {
   const [totalPrice, setTotalPrice] = useState(price * amount);
   return (
     <div className="cart-item">
       <div className="cart-info">
-        <img src={image} alt="" />
+        <img src={`assets/${image}`} alt="" />
         <span>{`R$ ${formatPrice(price)}`}</span>
       </div>
       <div><span className={"item-name"}>{name}</span></div>

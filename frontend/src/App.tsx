@@ -9,24 +9,27 @@ import { Cart } from './pages/Cart';
 import { Home } from './pages/Home';
 import { Product } from './pages/Product';
 import './global.css';
+import { ProductContextProvider } from './hooks/ProductContext';
 
 function App() {
   return (
     <>
-      <StyleContextProvider>
-        <Header />
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/product" element={<Product />} />
-            <Route path="/cart" element={<Cart />} />
-          </Routes>
-        </Router>
-        <SignModal />
-        <CartModal />
-        <FavModal />
-        <Footer />
-      </StyleContextProvider>
+      <ProductContextProvider>
+        <StyleContextProvider>
+          <Header />
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/:id" element={<Product />} />
+              <Route path="/carrinho" element={<Cart />} />
+            </Routes>
+          </Router>
+          <SignModal />
+          <CartModal />
+          <FavModal />
+          <Footer />
+        </StyleContextProvider>
+      </ProductContextProvider>
     </>
   );
 }

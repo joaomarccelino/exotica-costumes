@@ -12,7 +12,7 @@ export function FavItem({ image, price, name }: FavItemProps) {
   return (
     <div className="fav-item">
       <div className="fav-info">
-        <img src={image} alt="" />
+        <img src={`assets/${image}`} alt="" />
         <span>{`R$ ${formatPrice(price)}`}</span>
       </div>
       <div><span className={"item-name"}>{name}</span></div>

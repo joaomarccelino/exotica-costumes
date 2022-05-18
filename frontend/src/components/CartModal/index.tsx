@@ -1,38 +1,30 @@
-import CartImg from '../../assets/img/prod-test1.jpg';
-import { CartItem } from '../CartItem';
+import { useEffect, useState } from 'react';
+import { CartItem, CartItemProps } from '../CartItem';
 import './styles.css';
 
 export function CartModal() {
+  const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
   function closeModal() {
     const modal = document.querySelector('.cart-modal')
     modal?.classList.remove('active');
   }
-  const cartItems = [
-    {
-      image: CartImg,
-      price: 99.90,
-      name: 'Body Em Microfibra E Renda White Party',
-      amount: 3,
-    },
-    {
-      image: CartImg,
-      price: 99.90,
-      name: 'Body Em Microfibra E Renda White Party',
-      amount: 3,
-    },
-    {
-      image: CartImg,
-      price: 99.90,
-      name: 'Body Em Microfibra E Renda White Party',
-      amount: 3,
-    }
-  ]
+
+  function getCartItems() {
+    const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');
+    setCartItems(cartData);
+  }
+
+  useEffect(() => {
+    getCartItems();
+  })
+
   return (
     <div className="cart-modal">
       <h1>Carrinho</h1>
       <div className="cart-items-area">
-        {cartItems.map(item =>
+        {cartItems?.map(item =>
           <CartItem
+            id={item.id}
             image={item.image}
             price={item.price}
             name={item.name}
@@ -55,7 +47,7 @@ export function CartModal() {
             <span>Total</span>
             <span className="resume-price">R$ 169,90</span>
           </div>
-          <a href="/cart"className="general-btn">
+          <a href="/carrinho"className="general-btn">
             Finalizar
           </a>
         </div>
