@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Teste from '../../assets/img/imagem-teste.png';
 import Spotlight from '../../assets/img/spotlight.png';
 import { ProductCard } from '../../components/ProductCard';
 import { Slider } from '../../components/Slider';
@@ -47,7 +46,7 @@ export function Home() {
 
   useEffect(() => {
     getProducts();
-  })
+  }, [])
   return (
     <main>
       <div className="spotlight">
@@ -58,13 +57,7 @@ export function Home() {
           return (
             <ProductCard
               key={item.id}
-              id={item.id}
-              name={item.name}
-              image={item.image}
-              images={item.images}
-              price={item.price}
-              sizes={item.sizes}
-              evaluations={item.evaluations}
+              {...item}
             />
           )
         })}
@@ -72,6 +65,9 @@ export function Home() {
       <div className="news">
         <h2>Últimas Novidades</h2>
         <Slider />
+        <button className="general-btn">
+          Saiba mais
+        </button>
       </div>
     </main>
 

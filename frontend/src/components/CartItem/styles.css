@@ -7,6 +7,12 @@
   border-bottom: 1px solid var(--g6);
 }
 
+.cart-left, .cart-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
 .cart-item:first-child {
   border-top: 1px solid var(--g6);
 }

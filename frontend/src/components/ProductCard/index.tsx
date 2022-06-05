@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { ProductProps } from "../../pages/Home";
 
 export function ProductCard({ id, name, image, images, price, sizes, evaluations }: ProductProps) {
+  const adm = true;
   const product = ({
     id,
     name,
@@ -37,6 +38,11 @@ export function ProductCard({ id, name, image, images, price, sizes, evaluations
           <AiOutlineHeart size={25} color={flagged ? "#FFF" : "var(--p2)"} />
         </div>
       </button>
+      { adm && 
+        <div>
+          
+        </div>
+      }
     </div>
   )
 }

@@ -81,7 +81,7 @@ export function Product() {
             className="general-btn"
             onClick={() => handleAddItemToCart(newItem)}
           >
-            COMPRAR
+            ADICIONAR AO CARRINHO
           </button>
         </div>
       </main>

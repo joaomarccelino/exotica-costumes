@@ -1,22 +1,15 @@
-import { useEffect, useState } from 'react';
-import { CartItem, CartItemProps } from '../CartItem';
+import { useProducts } from '../../hooks/ProductContext';
+import { CartItem } from '../CartItem';
 import './styles.css';
 
 export function CartModal() {
-  const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
   function closeModal() {
     const modal = document.querySelector('.cart-modal')
     modal?.classList.remove('active');
   }
 
-  function getCartItems() {
-    const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');
-    setCartItems(cartData);
-  }
+  const { cartItems } = useProducts();
 
-  useEffect(() => {
-    getCartItems();
-  })
 
   return (
     <div className="cart-modal">
@@ -24,11 +17,8 @@ export function CartModal() {
       <div className="cart-items-area">
         {cartItems?.map(item =>
           <CartItem
-            id={item.id}
-            image={item.image}
-            price={item.price}
-            name={item.name}
-            amount={item.amount}
+            key={item.id}
+            {...item}
           />
         )}
       </div>
@@ -47,7 +37,7 @@ export function CartModal() {
             <span>Total</span>
             <span className="resume-price">R$ 169,90</span>
           </div>
-          <a href="/carrinho"className="general-btn">
+          <a href="/carrinho" className="general-btn">
             Finalizar
           </a>
         </div>

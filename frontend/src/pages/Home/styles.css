@@ -3,7 +3,7 @@
   margin-bottom: 120px;
 }
 .spotlight img{
-  height: 300px;
+  height: 400px;
   width: 100%;
   object-fit: cover;
 }
@@ -11,4 +11,19 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
+}
+
+.news {
+  text-align: center;
+}
+
+.news h2 {
+  margin-top: 120px;
+  margin-bottom: 40px;
+  color: var(--g12);
+}
+
+.news button {
+  margin-top: 40px;
+  margin-bottom: 120px;
 }

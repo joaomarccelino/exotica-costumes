@@ -1,0 +1,9 @@
+.my-orders h1{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 80px;
+  padding-bottom: 20px;
+  color: var(--g11);
+}

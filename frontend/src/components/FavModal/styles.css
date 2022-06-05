@@ -27,11 +27,9 @@
   margin-bottom: 20px;
 }
 
-.cart-items-area {
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
-  justify-content: center;
+.fav-items-area {
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .modal-resume {

@@ -32,7 +32,7 @@ export function ProductContextProvider({ children }: ProductContextProps) {
   useEffect(() => {
     getCartItems();
     getFavItems();
-  }, [cartItems, favItems]);
+  }, []);
 
   function handleAddItemToCart(cartItem: CartItemProps) {
     const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');

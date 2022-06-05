@@ -50,6 +50,7 @@ body,
 h1,
 h2,
 h3,
+button,
 p,
 ul,
 li,
@@ -74,7 +75,7 @@ a {
 }
 
 .empty-btn {
-  background: none;
+  background: transparent;
   border: none; 
   cursor: pointer;
 }

@@ -13,12 +13,11 @@ export function FavModal() {
   return (
     <div className="fav-modal">
       <h1>Favoritos</h1>
-      <div className="cart-items-area">
+      <div className="fav-items-area">
         {favItems.map(item =>
           <FavItem
-            image={item.image}
-            price={item.price}
-            name={item.name}
+            key={item.id}
+            {...item}
           />
         )}
       </div>

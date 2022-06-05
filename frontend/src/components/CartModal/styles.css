@@ -28,9 +28,8 @@
 }
 
 .cart-items-area {
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .modal-resume {
