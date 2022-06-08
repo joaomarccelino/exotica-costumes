@@ -4,6 +4,7 @@
   position: relative;
   padding: 20px;
   background: var(--g1);
+  /* background: linear-gradient(var(--p4), var(--g1)); */
   border-radius: 4px;
 }
 

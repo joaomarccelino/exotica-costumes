@@ -7,14 +7,33 @@ import { RiBillLine } from 'react-icons/ri';
 import { months, years, paymentOptions } from '../../utils/commonData';
 import { CartItem } from '../../components/CartItem';
 import './styles.css';
-import { formatPrice } from '../../utils/formatPrice';
 import { useProducts } from '../../hooks/ProductContext';
 import { ItemResume } from '../../components/ItemResume';
+import { useForm } from 'react-hook-form';
+
+type OrderInputs = {
+  customerName: string;
+  address: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  cep: string;
+  payment: string; 
+  paymentData?: {
+    cardNumber: string;
+    securityCode: string;
+    cardName: string;
+    expirationMonth: string;
+    expirationYear: string;
+    portion: number;
+  }
+}
+
 export function Cart() {
   const [totalValue, setTotalValue] = useState(0);
   const [shipping, setShipping] = useState(56.50);
   const [paymentMethod, setPaymentMethod] = useState('credit');
-
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<OrderInputs>();
   function calcTotalValue() {
     let total = 0
     cartItems.forEach(item => {
@@ -57,17 +76,17 @@ export function Cart() {
           <form action="" className="delivery-form">
             <h3>Entrega</h3>
             <label htmlFor="">Nome</label>
-            <input type="text" />
+            <input type="text" {...register("customerName", { required: true })} />
             <label htmlFor="">Endereço</label>
-            <input type="text" />
+            <input type="text" {...register("address", { required: true })} />
             <label htmlFor="">Bairro</label>
-            <input type="text" />
+            <input type="text"  {...register("neighborhood", { required: true })}/>
             <label htmlFor="">Cidade</label>
-            <input type="text" />
+            <input type="text"  {...register("city", { required: true })}/>
             <label htmlFor="">Estado</label>
-            <input type="text" />
+            <input type="text"  {...register("state", { required: true })}/>
             <label htmlFor="">CEP</label>
-            <input type="text" />
+            <input type="text"  {...register("cep", { required: true })}/>
           </form>
           <form action="" className="payment-form">
             <h3>Forma de pagamento</h3>
@@ -91,20 +110,20 @@ export function Cart() {
               <div className="credit-form">
                 <div className="card-number">
                   <label htmlFor="cardNumber">Número do cartão</label>
-                  <input type="text" name="cardNumber" id="cardNumber" />
+                  <input type="text" id="cardNumber"  {...register("paymentData.cardNumber", { required: true })}/>
                 </div>
                 <div className="sec-code">
                   <label htmlFor="securityCode">Cód segurança</label>
-                  <input type="text" name="securityCode" id="securityCode" />
+                  <input type="text" id="securityCode"  {...register("paymentData.securityCode", { required: true })}/>
                 </div>
                 <div className="card-name">
                   <label htmlFor="cardName">Nome no cartão</label>
-                  <input type="text" id="cardName" name="cardName" />
+                  <input type="text" id="cardName" {...register("paymentData.cardName", { required: true })}/>
                 </div>
                 <div className="exp-date">
                   <label htmlFor="">Validade</label>
                   <div className="expiration-date">
-                    <select name="month" id="month">
+                    <select id="month"  {...register("paymentData.expirationMonth", { required: true })}>
                       <option value="" selected disabled hidden>Mês</option>
                       {months.map(item => {
                         return (
@@ -112,7 +131,7 @@ export function Cart() {
                         )
                       })}
                     </select>
-                    <select name="year" id="year">
+                    <select id="year" {...register("paymentData.expirationYear", { required: true })}>
                       <option value="" selected disabled hidden>Ano</option>
                       {years.map(item => {
                         return (
@@ -124,7 +143,7 @@ export function Cart() {
                 </div>
                 <div className="portion-input">
                   <label htmlFor="">Número de parcelas</label>
-                  <select name="portion" id="portion">
+                  <select id="portion" {...register("paymentData.portion", { required: true })}>
                     {paymentOptions.map(item => {
                       return (
                         <option value={item}>{item}</option>

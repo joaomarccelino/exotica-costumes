@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Spotlight from '../../assets/img/spotlight.png';
+import { CadItemModal } from '../../components/CadItemModal';
 import { ProductCard } from '../../components/ProductCard';
 import { Slider } from '../../components/Slider';
 import './styles.css';
@@ -31,6 +32,12 @@ export function Home() {
 
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const adm = true;
+
+  function handleShowCad() {
+    const signModal = document.querySelector('.cad-item-bg')
+    signModal?.classList.add('active');
+  }
 
   function getProducts() {
     setLoading(true);
@@ -52,6 +59,16 @@ export function Home() {
       <div className="spotlight">
         <img src={Spotlight} alt="" />
       </div>
+      {adm && 
+      <div className="adm-btn">
+        <button 
+        className="general-btn"
+        onClick={handleShowCad}
+        >
+          Adicionar Item
+        </button>
+      </div>
+      }
       <div className="container products">
         {products.map(item => {
           return (
@@ -69,6 +86,7 @@ export function Home() {
           Saiba mais
         </button>
       </div>
+      <CadItemModal />
     </main>
 
   )

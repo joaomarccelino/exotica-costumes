@@ -5,11 +5,19 @@ const paymentOptions = [
   '2x de R$ 85,90',
   '3x de R$ 65,20'
 ]
-const gender = ['Mulher Cis', 'Homem Cis', 'Mulher Trans', 'Homem Trans', 'Não-binárie', 'Outro', 'Prefiro não informar']
+const gender = ['Mulher Cis', 'Homem Cis', 'Mulher Trans', 'Homem Trans', 'Não-binárie', 'Outro', 'Prefiro não informar'];
+
+const categories = ["Sutiã", "Calcinha", "Body", "Modelador", "Plus", "Fitness", "Estimulantes", "Massagem", "Fantasias", "Próteses"];
+
+const sizePatternP = ['PP', 'P', 'M', 'G', 'GG', 'GGG'];
+const sizePatternN = [38, 40, 42, 44, 46, 48];
 
 export {
   months,
   years,
   paymentOptions,
-  gender
+  gender,
+  sizePatternP,
+  sizePatternN,
+  categories
 }

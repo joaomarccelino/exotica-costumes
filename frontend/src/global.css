@@ -102,13 +102,17 @@ a {
 
 .general-btn {
   padding: 10px 20px;
-  background: #883570;
+  background: var(--p4);
   border-radius: 4px;
   border: none;
   color: #fff;
   font: bold 1rem/1.5 'Fira Sans', sans-serif;
   cursor: pointer;
   text-transform: uppercase;
+}
+
+.general-btn:hover {
+  opacity: 0.8;
 }
 
 :root.dark-mode.sexshop .general-btn {

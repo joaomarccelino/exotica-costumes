@@ -1,0 +1,116 @@
+.cad-item-bg {
+  height: 100vh;
+  width: 100%; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  display: none;
+  animation: show-modal-up .8s;
+  transition: ease 1s;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cad-item-bg.active {
+  display: initial;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cad-item-modal {
+  box-sizing: border-box;
+  padding: 40px 40px;
+  background: var(--g2);
+  max-width: 840px;
+  margin: 40px auto;
+  border-radius: 4px;
+  position: relative;
+}
+
+.cad-item-modal h1 {
+  font-size: 2rem;
+  color: var(--p4);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.cad-item-modal label,
+.cad-item-modal input,
+.cad-item-modal select {
+  display: block;
+}
+
+.cad-item-modal label {
+  color: var(--g8);
+  margin-bottom: 4px;
+}
+
+.cad-item-modal input {
+  margin-bottom: 20px;
+  border: 1px solid #ededed;
+  border-radius: 4px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+  height: 36px;
+  width: 100%;
+  margin-bottom: 10px;
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
+  padding-left: 10px;
+}
+
+.cad-item-form #price,
+.cad-item-form #pattern {
+  width: 40%;
+}
+
+
+.left-right-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-form {
+  flex: 2;
+}
+
+.right-form {
+  background: var(--g1);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 3;
+}
+
+.right-form h2 {
+  font-size: 1rem;
+  color: var(--g10);
+}
+
+.cad-close-button {
+  color: red;
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cad-btn {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.size-form {
+  display: flex;
+  gap: 20px;
+}
+
+#quantity1,
+#quantity2,
+#quantity3,
+#quantity4 {
+  width: 30%;
+}
