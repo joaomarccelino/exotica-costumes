@@ -8,10 +8,12 @@ import { AiOutlineShoppingCart, AiOutlineHeart, AiOutlineBulb } from 'react-icon
 
 import './styles.css';
 import { useStyle } from '../../hooks/StyleContext';
+import { useState } from 'react';
+import { AuthMenu } from '../AuthMenu';
 
 export function Header() {
   const { theme, handleSexShop, handleRemoveSexShop, handleNight } = useStyle();
-
+  const [isAuth, setIsAuth] = useState(true);
   function handleShowSignIn() {
     const signModal = document.querySelector('.sign-bg')
     signModal?.classList.add('active');
@@ -48,15 +50,19 @@ export function Header() {
             <input type="text" placeholder="O que você procura?" className="searchInput" />
           </form>
           <div className="actions">
-            <button
-              className="login-btn header-btn"
-              onClick={() => handleShowSignIn()}
-            >
-              <div className="login-btn-icon">
-                <FaRegUser size={20} color={"var(--p2)"} />
-              </div>
-              <span>Login ou Cadastro</span>
-            </button>
+            {
+              isAuth ?
+                <AuthMenu /> :
+                <button
+                  className="login-btn header-btn"
+                  onClick={() => handleShowSignIn()}
+                >
+                  <div className="login-btn-icon">
+                    <FaRegUser size={20} color={"var(--p2)"} />
+                  </div>
+                  <span>Login ou Cadastro</span>
+                </button>
+            }
             <button
               className="header-btn"
               onClick={() => handleShowCart()}

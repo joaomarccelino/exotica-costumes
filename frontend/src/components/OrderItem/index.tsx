@@ -1,7 +1,7 @@
 import { CartItem, CartItemProps } from "../CartItem";
 import { ItemResume } from "../ItemResume";
 
-import {MdKeyboardArrowDown} from 'react-icons/md';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 
 import './styles.css';
 import { useState } from "react";
@@ -31,14 +31,14 @@ export function OrderItem(
     date,
     details
   }: OrderItemProps) {
-    const [showDetails, setShowDetails] = useState(false);
-    function handleShowDetails() {
-      setShowDetails(!showDetails);
-      const icon = document.querySelector(`.class-${orderNumber}`);
-      icon?.classList.toggle('arrow-active');
-    }
+  const [showDetails, setShowDetails] = useState(false);
+  function handleShowDetails() {
+    setShowDetails(!showDetails);
+    const icon = document.querySelector(`.class-${orderNumber}`);
+    icon?.classList.toggle('arrow-active');
+  }
 
-    return (
+  return (
     <div className="order-item">
       <div className="order-data">
         <div className="order-number">
@@ -57,9 +57,9 @@ export function OrderItem(
           <span>Data</span>
           <p className="order-date">{date}</p>
         </div>
-        <button 
-        className="empty-btn order-details-btn"
-        onClick={handleShowDetails}
+        <button
+          className="empty-btn order-details-btn"
+          onClick={handleShowDetails}
         >
           Detalhes do pedido
           <MdKeyboardArrowDown size={30} className={`class-${orderNumber}`} />
@@ -69,27 +69,27 @@ export function OrderItem(
       {
         showDetails &&
         <div className="order-details">
-        <div className="order-address">
-          <h3>Endereço</h3>
-          <p>{details.address.street}</p>
-          <p>{details.address.neighborhood}</p>
-          <p>{`CEP: ${details.address.cep} - ${details.address.city}/${details.address.state}`}</p>
-        </div>
-        <h3>Produtos</h3>
-        <div className="cart-content">
-          <div className="cart-items">
-            {details.items.map(item => {
-              return (
-                <CartItem
-                  key={item.id}
-                  {...item}
-                />
-              )
-            })}
+          <div className="order-address">
+            <h3>Endereço</h3>
+            <p>{details.address.street}</p>
+            <p>{details.address.neighborhood}</p>
+            <p>{`CEP: ${details.address.cep} - ${details.address.city}/${details.address.state}`}</p>
           </div>
-          <ItemResume totalValue={259.90} shipping={125} />
+          <h3>Produtos</h3>
+          <div className="cart-content">
+            <div className="cart-items">
+              {details.items.map(item => {
+                return (
+                  <CartItem
+                    key={item.id}
+                    {...item}
+                  />
+                )
+              })}
+            </div>
+            <ItemResume totalValue={259.90} shipping={125} />
+          </div>
         </div>
-      </div>
       }
     </div>
   )

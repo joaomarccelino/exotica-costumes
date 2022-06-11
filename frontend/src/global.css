@@ -62,8 +62,12 @@ a {
 body {
   background: var(--g2);
   font-family: 'Fira Sans', sans-serif;
+  box-sizing: border-box;
 }
 
+li {
+  list-style: none;
+}
 
 img {
   max-width: 100%;
@@ -97,7 +101,6 @@ a {
   margin: 0 auto;
   padding-left: 20px;
   padding-right: 20px;
-  box-sizing: border-box;
 }
 
 .general-btn {

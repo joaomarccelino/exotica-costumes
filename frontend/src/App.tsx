@@ -11,6 +11,7 @@ import { Product } from './pages/Product';
 import './global.css';
 import { ProductContextProvider } from './hooks/ProductContext';
 import { MyOrders } from './pages/MyOrders';
+import { MyData } from './pages/MyData';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/:id" element={<Product />} />
               <Route path="/carrinho" element={<Cart />} />
               <Route path="/pedidos" element={<MyOrders />} />
+              <Route path="/meus-dados" element={<MyData />} />
             </Routes>
           </Router>
           <SignModal />

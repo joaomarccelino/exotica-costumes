@@ -6,6 +6,7 @@ import './styles.css';
 import { formatPrice } from "../../utils/formatPrice";
 import { Link } from "react-router-dom";
 import { ProductProps } from "../../pages/Home";
+import { AdmCardButtons } from "../AdmCardButtons";
 
 export function ProductCard({ id, name, image, images, price, sizes, evaluations }: ProductProps) {
   const adm = true;
@@ -39,9 +40,7 @@ export function ProductCard({ id, name, image, images, price, sizes, evaluations
         </div>
       </button>
       { adm && 
-        <div>
-          
-        </div>
+        <AdmCardButtons />
       }
     </div>
   )

@@ -17,7 +17,6 @@
 }
 
 .cad-item-modal {
-  box-sizing: border-box;
   padding: 40px 40px;
   background: var(--g2);
   max-width: 840px;

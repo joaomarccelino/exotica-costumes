@@ -1,43 +1,26 @@
-.sign-bg {
-  height: 100vh;
-  width: 100%; 
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2000;
-  display: none;
-  animation: show-modal-up .8s;
-  transition: ease 1s;
-}
-
 .sign-bg.active {
   display: initial;
   background: rgba(0, 0, 0, 0.5);
 }
 
-.sign-modal {
-  padding: 40px 140px;
-  background: var(--g2);
-  max-width: 840px;
-  margin: 120px auto;
-  border-radius: 4px;
-  position: relative;
+.data-form {
+  padding: 40px 80px;
 }
 
-.sign-modal h1 {
+.my-data h1 {
   text-align: center;
   text-transform: uppercase;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  color: var(--p4);
-  margin-bottom: 40px;
+  color: var(--g11);
+  margin-top: 40px;
 }
 
-.sign-modal input, .sign-modal label {
+.data-form input, .data-form label {
   display: block;
 }
 
-.sign-modal input {
+.data-form input {
   border: 1px solid #ededed;
   border-radius: 4px;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
@@ -47,24 +30,24 @@
   width: 100%;
 }
 
-.sign-modal p {
+.data-form p {
   font-size: 1rem;
   font-weight: bold;
   color: var(--g13);
   text-align: center;
 }
 
-.sign-modal p a {
+.data-form p a {
   color: var(--p4);
   cursor: pointer;
 }
 
-.sign-modal button {
+.data-form button {
   margin-top: 20px;
   margin-bottom: 40px;
 }
 
-.sign-form label{
+.data-form label{
   color: var(--g8);
   font-size: 1rem;
   font-weight: 500;
@@ -92,12 +75,6 @@
   cursor: pointer;
 }
 
-@keyframes show-modal-up {
-  from {
-    top: -800px;
-    background: none;
-  }
-  to {
-    top: 0;    
-  }
+.my-data-btn {
+  text-align: center;
 }
