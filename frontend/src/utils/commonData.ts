@@ -7,7 +7,9 @@ const paymentOptions = [
 ]
 const gender = ['Mulher Cis', 'Homem Cis', 'Mulher Trans', 'Homem Trans', 'Não-binárie', 'Outro', 'Prefiro não informar'];
 
-const categories = ["Sutiã", "Calcinha", "Body", "Modelador", "Plus", "Fitness", "Estimulantes", "Massagem", "Fantasias", "Próteses"];
+const categories = ["Moda Íntima", "SexShop"];
+
+const subCategories = ["Sutiã", "Calcinha", "Body", "Modelador", "Plus", "Fitness", "Estimulantes", "Massagem", "Fantasias", "Próteses"];
 
 const sizePatternP = ['PP', 'P', 'M', 'G', 'GG', 'GGG'];
 const sizePatternN = [38, 40, 42, 44, 46, 48];
@@ -19,5 +21,6 @@ export {
   gender,
   sizePatternP,
   sizePatternN,
-  categories
+  categories,
+  subCategories
 }

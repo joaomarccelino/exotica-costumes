@@ -16,3 +16,15 @@
 .product-thumbs img.selected-img {
   opacity: 0.7;
 }
+
+@media (max-width: 600px) {
+  .product-thumbs img {
+    width: 120px;
+  }
+}
+
+@media (max-width: 400px) {
+  .product-thumbs img {
+    width: 80px;
+  }
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import api from "../../services/api";
 import { sizePatternP, sizePatternN, categories } from '../../utils/commonData';
 import './styles.css';
 
@@ -28,13 +29,114 @@ export function CadItemModal() {
   const [sizePattern, setSizePattern] = useState<string[] | number[]>([]);
   const [showSizes, setShowSizes] = useState<boolean>(false);
   const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async data => {
+    const newProduct = {
+      name: data.name,
+      description: data.description,
+      category: data.category,
+      status: 'ACTIVE',
+      price: data.price,
+      stock: [
+        {
+          size: data.size1,
+          quantity: data.quantity1
+        },
+        {
+          size: data.size2,
+          quantity: data.quantity2
+        },
+        {
+          size: data.size3,
+          quantity: data.quantity3
+        },
+        {
+          size: data.size4,
+          quantity: data.quantity4
+        }
+      ]
+
+    }
+    const response = await api.post('https://api-exotica.herokuapp.com/product/', JSON.stringify(newProduct), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        console.log(res);
+        const modal = document.querySelector('.cad-item-bg');
+        modal?.classList.remove('active');
+      });
+  }
+  const [product, setProduct] = useState({});
 
   const watchAllFields = watch();
 
+  // async function handleAddProduct() {
+  //   const response = await api.post('https://api-exotica.herokuapp.com/product/', JSON.stringify(product))
+  //     .then(res => {
+  //       console.log(res);
+  //       const modal = document.querySelector('.cad-item-bg');
+  //       modal?.classList.remove('active');
+  //     });
+  // }
+
+  async function handleAddProduct() {
+    let config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const response = await api.post('https://api-exotica.herokuapp.com/product/', JSON.stringify(product), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        console.log(res);
+        const modal = document.querySelector('.cad-item-bg');
+        modal?.classList.remove('active');
+      })
+      .catch(e => console.log(e));
+  }
+
+  // async function handleAddProduct() {
+  //   fetch('https://api-exotica.herokuapp.com/product/', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(product)
+  //   }).then(res=> console.log(res)).catch(e => console.log(e));
+  // }
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      console.log(value, name, type)
+      console.log(value)
+      const newProduct = {
+        name: value.name,
+        description: value.description,
+        category: value.category,
+        price: value.price,
+        stock: [
+          {
+            size: value.size1,
+            quantity: value.quantity1
+          },
+          {
+            size: value.size2,
+            quantity: value.quantity2
+          },
+          {
+            size: value.size3,
+            quantity: value.quantity3
+          },
+          {
+            size: value.size4,
+            quantity: value.quantity4
+          }
+        ]
+
+      }
+      setProduct(newProduct);
       if (value.pattern === 'pmg') {
         setShowSizes(true);
         setSizePattern(sizePatternP)
@@ -48,6 +150,7 @@ export function CadItemModal() {
       }
     }
     );
+
     return () => subscription.unsubscribe();
   }, [watch]);
 
@@ -178,6 +281,7 @@ export function CadItemModal() {
               <input type="file" />
             </div>
           </div>
+          <button type="submit">Submit</button>
         </form>
         <button
           className="cad-close-button"
@@ -186,7 +290,7 @@ export function CadItemModal() {
           X
         </button>
         <div className="cad-btn">
-          <button className="general-btn">
+          <button className="general-btn" onClick={() => handleAddProduct()}>
             Adicionar
           </button>
         </div>

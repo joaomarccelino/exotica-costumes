@@ -145,3 +145,19 @@ select {
 select {
   background: #FFF;
 }
+
+@media (max-width: 1000px) {
+  .cart-content {
+    grid-template-columns: 1fr;
+  }
+  .payment-forms {
+    grid-template-columns: 1fr;
+  }
+  
+}
+
+@media (max-width: 500px) {
+  .credit-form {
+    grid-template-columns: 1fr;
+  }
+}

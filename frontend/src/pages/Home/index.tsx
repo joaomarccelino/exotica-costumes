@@ -3,11 +3,13 @@ import Spotlight from '../../assets/img/spotlight.png';
 import { CadItemModal } from '../../components/CadItemModal';
 import { ProductCard } from '../../components/ProductCard';
 import { Slider } from '../../components/Slider';
+import { useProducts } from '../../hooks/ProductContext';
+import api from '../../services/api';
 import './styles.css';
 
 type Size = {
-  size: number;
-  available: number;
+  size: number | string;
+  quantity: number;
 }
 
 type Evaluation = {
@@ -24,14 +26,17 @@ export type ProductProps = {
   name: string;
   image: string;
   images: string[];
+  description: string;
   price: number;
-  sizes: Size[];
+  stock: Size[];
+  flagged?: boolean;
   evaluations: Evaluation[];
 }
 export function Home() { 
 
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const {favItems} = useProducts();
   const adm = true;
 
   function handleShowCad() {
@@ -39,16 +44,11 @@ export function Home() {
     signModal?.classList.add('active');
   }
 
-  function getProducts() {
-    setLoading(true);
-    fetch('products.json')
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
-      })
-      .finally(() => {
-        setLoading(false);
-      })
+  async function getProducts() {
+    const response = await api.get('');
+    const data = response.data.response.products;
+    console.log(data);
+    setProducts(data);
   }
 
   useEffect(() => {
@@ -71,10 +71,17 @@ export function Home() {
       }
       <div className="container products">
         {products.map(item => {
+          let flagged = false;
+          favItems.forEach(fav => {
+            if (fav.id === item.id) {
+              flagged = true;
+            } 
+          })
           return (
             <ProductCard
               key={item.id}
               {...item}
+              flagged={flagged}
             />
           )
         })}

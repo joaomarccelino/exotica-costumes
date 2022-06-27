@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 80px !important;
+  margin-bottom: 80px !important;
 }
 
 .product-info {
@@ -39,6 +40,13 @@
   color: var(--g13);
 }
 
+.unavaible-product {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #FF3333;
+  text-transform: uppercase;
+}
+
 .sizes {
   display: flex;
   gap: 24px;
@@ -46,6 +54,8 @@
 
 .size {
   padding: 8px;
+  height: 60px;
+  width: 60px;
   background: #DEDEDE;
   border: none;
   border-radius: 50%;
@@ -59,6 +69,54 @@
   background: #404040;
   border: 1px solid var(--p1);
   color: #fff;
+}
+
+.quantity-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quantity-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-title {
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--g9);
+    text-align: center;
+}
+
+.quantity-buttons button, .quantity-buttons span {
+  width: 40px;
+  height: 40px;
+}
+
+.quantity-buttons button {
+  background: #fff;
+  border: none;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  font-size: 1.125rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.quantity-buttons span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  background: #fff;
 }
 
 .description {
@@ -102,4 +160,24 @@
   height: 1px;
   background: var(--g9);
   margin-top: 20px;
+}
+
+.add-eval {
+  display: flex;  
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.add-eval textarea {
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
+}
+
+@media (max-width:1000px) {
+  .product {
+    grid-template-columns: 1fr;
+  }
+  .product-info {
+    margin-top: 40px;
+  }
 }

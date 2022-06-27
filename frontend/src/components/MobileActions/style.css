@@ -1,0 +1,33 @@
+.mobile-actions {
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 40px;
+  flex: 5;
+}
+
+.mob-login-btn {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--g12);
+  background: var(--g1);
+  cursor: pointer;
+  font: bold 1rem/1.1 'Fira Sans', sans-serif;
+}
+
+.mob-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--g11);
+  border: 1px solid var(--g2);
+}
+@media (max-width: 600px) {
+  .mobile-actions {
+    display: flex;
+  }
+}

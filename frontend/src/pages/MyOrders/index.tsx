@@ -20,9 +20,9 @@ export function MyOrders() {
           {
             id: "123",
             name: "Body Em Microfibra E Renda White Party",
-            image: "prod-test1.jpg",
+            images: ["prod-test1.jpg"],
             price: 59.90,
-            amount: 3,
+            quantity: 3,
           }
         ]
       }
@@ -44,9 +44,9 @@ export function MyOrders() {
           {
             id: "456",
             name: "Body Em Microfibra E Renda White Party",
-            image: "prod-test1.jpg",
+            images: ["prod-test1.jpg"],
             price: 59.90,
-            amount: 3,
+            quantity: 3,
           }
         ]
       }
@@ -68,9 +68,9 @@ export function MyOrders() {
           {
             id: "789",
             name: "Body Em Microfibra E Renda White Party",
-            image: "prod-test1.jpg",
+            images: ["prod-test1.jpg"],
             price: 59.90,
-            amount: 3,
+            quantity: 3,
           }
         ]
       }

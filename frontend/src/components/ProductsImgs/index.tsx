@@ -4,7 +4,11 @@ import Prod3 from '../../assets/img/prod-test3.jpg';
 
 import './styles.css';
 
-export function ProductImgs() {
+type ProductImgsProps = {
+  images: string[];
+}
+
+export function ProductImgs({images}: ProductImgsProps) {
 
   const thumbs = document.querySelectorAll('.thumbImg')
 
@@ -26,11 +30,11 @@ export function ProductImgs() {
 
   return (
     <div className="product-images">
-      <img src={Prod1} alt="Image 1" className="mainProductImg" />
+      <img src={images[0]} alt="Image 1" className="mainProductImg" />
       <div className="product-thumbs">
-        <img src={Prod1} alt="" className="thumbImg selected-img" />
-        <img src={Prod2} alt="" className="thumbImg" />
-        <img src={Prod3} alt="" className="thumbImg" />
+        <img src={images[0]} alt="" className="thumbImg selected-img" />
+        <img src={images[1]} alt="" className="thumbImg" />
+        <img src={images[2]} alt="" className="thumbImg" />
       </div>
     </div>
   )

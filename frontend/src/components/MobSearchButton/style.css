@@ -1,0 +1,9 @@
+.mob-search-btn {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .mob-search-btn {
+    display: initial;
+  }
+}

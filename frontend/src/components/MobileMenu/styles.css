@@ -1,0 +1,25 @@
+.mobile-menu {
+  display: none;
+  margin: 0 auto;
+  max-width: 1180px;
+}
+
+.mob-sexshop-categories, .mob-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--g2);
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.mob-categories a, .mob-sexshop-categories a {
+  color: var(--g13);
+}
+
+
+@media (max-width:1000px) {
+  .mobile-menu {
+    display: block;
+  }
+}

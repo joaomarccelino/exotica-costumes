@@ -1,0 +1,57 @@
+.user-menu {
+  display: none;
+  position: absolute;
+  padding: 20px 20px 0px 20px;
+  background: var(--p4);
+  margin-left: 40px;
+  border-radius: 4px;
+  z-index: 200;
+  border: 1px solid #000;
+}
+
+.user-menu li {
+  margin-bottom: 20px;
+}
+
+.user-menu a {
+  color: var(--g1);
+}
+
+.user-menu::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -10px;
+  width: 0px;
+  height: 0px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid var(--p4);
+}
+
+.user-menu.active {
+  display: block;
+}
+
+.sign-out-btn {
+  color: var(--g1);
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-menu a:hover, .sign-out-btn:hover {
+  opacity: 0.6;
+}
+
+.mob-login-btn-icon {
+  border: 1px solid var(--g2);
+  background: var(--g11);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

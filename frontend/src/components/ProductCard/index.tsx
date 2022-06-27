@@ -8,31 +8,31 @@ import { Link } from "react-router-dom";
 import { ProductProps } from "../../pages/Home";
 import { AdmCardButtons } from "../AdmCardButtons";
 
-export function ProductCard({ id, name, image, images, price, sizes, evaluations }: ProductProps) {
-  const adm = true;
+export function ProductCard({ id, name, images, price, stock, description, evaluations, flagged }: ProductProps) {
+  const adm = false;
   const product = ({
     id,
     name,
-    image,
     images,
     price,
-    sizes,
+    stock,
+    description,
     evaluations
   })
-  const [flagged, setFlagged] = useState(false);
+  const [itemFlag, setItemFlag] = useState(flagged);
   const portion = (price / 3);
   const url = name.toLowerCase().replaceAll(' ', '-');
 
   function handleFlagItem() {
-    setFlagged(!flagged);
+    setItemFlag(!itemFlag);
   }
   return (
     <div className="product-card">
       <Link to={`/${url}`} state={{ product }}>
-        <img src={`/assets/${image}`} alt={name} />
+        <img src={images[0]} alt={name} />
       </Link>
-      <span className="card-prod-price">{`R$ ${formatPrice(price)}`}</span>
-      <p>em <span className="color-text">{`até 3x de R$ ${formatPrice(portion)} sem juros`}</span></p>
+      <span className="card-prod-price">{formatPrice(price)}</span>
+      <p>em <span className="color-text">{`até 3x de ${formatPrice(portion)} sem juros`}</span></p>
       <Link to={`/${url}`} state={{ product }}>{name}</Link>
       <button className="fav-btn" onClick={() => handleFlagItem()}>
         <div className={flagged ? "filled-heart" : "unfilled-heart"}>

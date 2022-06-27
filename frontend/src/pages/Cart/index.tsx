@@ -34,25 +34,24 @@ export function Cart() {
   const [shipping, setShipping] = useState(56.50);
   const [paymentMethod, setPaymentMethod] = useState('credit');
   const { register, handleSubmit, watch, formState: { errors } } = useForm<OrderInputs>();
-  function calcTotalValue() {
-    let total = 0
-    cartItems.forEach(item => {
-      total += item.price
-    })
-    setTotalValue(total);
-  }
 
   function handleSelectPayment(method: string) {
     if (method === 'credit') setPaymentMethod('credit');
     if (method === 'pix') setPaymentMethod('pix');
     if (method === 'ticket') setPaymentMethod('ticket');
   }
+  const { cartItems } = useProducts();
+  function handleCalcTotal() {
+    let sum = 0;
+    cartItems.forEach(item => {
+      sum+= (item.price * item.quantity)
+    })
+    setTotalValue(sum);
+  }
 
   useEffect(() => {
-    calcTotalValue()
-  }, [])
-
-  const { cartItems } = useProducts();
+    handleCalcTotal();
+  }, [cartItems]);
 
   return (
     <div className="cart container">

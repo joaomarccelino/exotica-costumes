@@ -8,6 +8,7 @@ type ProductContextType = {
   favItems: FavItemProps[];
   handleAddItemToCart(cartItem: CartItemProps): void;
   handleAddFavItem(favItem: FavItemProps): void;
+  handleUpdateCart(newItems: CartItemProps[]): void;
 }
 
 type ProductContextProps = {
@@ -35,9 +36,17 @@ export function ProductContextProvider({ children }: ProductContextProps) {
   }, []);
 
   function handleAddItemToCart(cartItem: CartItemProps) {
+    console.log("Clicou");
     const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');
     localStorage.setItem('cartItem', JSON.stringify([...cartData, cartItem]));
     alert("Item adicionado com sucesso!");
+  }
+
+  function handleUpdateCart(newItems: CartItemProps[]) {
+    localStorage.setItem('cartItem', JSON.stringify(newItems));
+    const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');
+    console.log(cartData);
+    setCartItems(newItems);
   }
 
   function handleAddFavItem(favItem: FavItemProps) {
@@ -49,7 +58,7 @@ export function ProductContextProvider({ children }: ProductContextProps) {
 
 
   return (
-    <ProductContext.Provider value={{ cartItems, favItems, handleAddItemToCart, handleAddFavItem }}>
+    <ProductContext.Provider value={{ cartItems, favItems, handleAddItemToCart, handleAddFavItem, handleUpdateCart }}>
       {children}
     </ProductContext.Provider>
   )

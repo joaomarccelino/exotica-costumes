@@ -3,17 +3,22 @@ import DarkLogo from '../../assets/img/dark-logo.svg';
 import SexShopLogo from '../../assets/img/sexshop-logo.svg';
 
 import { FaRegUser } from 'react-icons/fa';
-
+import { HiOutlineSearchCircle } from 'react-icons/hi';
 import { AiOutlineShoppingCart, AiOutlineHeart, AiOutlineBulb } from 'react-icons/ai';
 
 import './styles.css';
 import { useStyle } from '../../hooks/StyleContext';
 import { useState } from 'react';
 import { AuthMenu } from '../AuthMenu';
+import { MobileMenu } from '../MobileMenu';
+import { MobileActions } from '../MobileActions';
+import { MobSearchButton } from '../MobSearchButton';
+import { MobileLogo } from '../MobileLogo';
 
 export function Header() {
   const { theme, handleSexShop, handleRemoveSexShop, handleNight } = useStyle();
   const [isAuth, setIsAuth] = useState(true);
+
   function handleShowSignIn() {
     const signModal = document.querySelector('.sign-bg')
     signModal?.classList.add('active');
@@ -46,46 +51,60 @@ export function Header() {
           <a href="/" className="logo">
             <img src={handleLogo()} alt="Exótica" />
           </a>
-          <form action="" className="search">
-            <input type="text" placeholder="O que você procura?" className="searchInput" />
-          </form>
-          <div className="actions">
-            {
-              isAuth ?
-                <AuthMenu /> :
-                <button
-                  className="login-btn header-btn"
-                  onClick={() => handleShowSignIn()}
-                >
-                  <div className="login-btn-icon">
-                    <FaRegUser size={20} color={"var(--p2)"} />
-                  </div>
-                  <span>Login ou Cadastro</span>
-                </button>
-            }
-            <button
-              className="header-btn"
-              onClick={() => handleShowCart()}
-            >
-              <div className="header-icon">
-                <AiOutlineShoppingCart size={25} color="#fff" />
-              </div>
-            </button>
-            <button
-              className="header-btn"
-              onClick={() => handleShowFav()}
-            >
-              <div className="header-icon">
-                <AiOutlineHeart size={25} color="#FFF" />
-              </div>
-            </button>
-            <button onClick={handleNight} className="header-btn">
-              <div className="header-icon n-mode">
-                <AiOutlineBulb size={25} color="var(--p2)" />
-              </div>
-            </button>
+          <MobileLogo />
+          <div className="header-options">
+            <form action="" className="search">
+              <input type="text" placeholder="O que você procura?" className="searchInput" />
+              <button className="search-btn empty-btn">
+                <HiOutlineSearchCircle size={40} color={"var(--p2)"} />
+              </button>
+              <MobSearchButton />
+            </form>
+            <div className="actions">
+              {
+                isAuth ?
+                  <AuthMenu /> :
+                  <button
+                    className="login-btn header-btn"
+                    onClick={() => handleShowSignIn()}
+                  >
+                    <div className="login-btn-icon">
+                      <FaRegUser size={20} color={"var(--p2)"} />
+                    </div>
+                    <span>Login ou Cadastro</span>
+                  </button>
+              }
+              <button
+                className="header-btn"
+                onClick={() => handleShowCart()}
+              >
+                <div className="header-icon">
+                  <AiOutlineShoppingCart size={25} color="var(--g1)" />
+                </div>
+              </button>
+              <button
+                className="header-btn"
+                onClick={() => handleShowFav()}
+              >
+                <div className="header-icon">
+                  <AiOutlineHeart size={25} color="var(--g1)" />
+                </div>
+              </button>
+              <button onClick={handleNight} className="header-btn">
+                <div className="header-icon n-mode">
+                  <AiOutlineBulb size={25} color="var(--p2)" />
+                </div>
+              </button>
+            </div>
+            <MobileActions 
+              isAuth
+              handleShowFav={handleShowFav}
+              handleShowCart={handleShowCart}
+              handleShowSignIn={handleShowSignIn}
+            />
           </div>
         </div>
+        <MobileMenu />
         {theme === 'sexshop' ?
           <div className="sexshop-categories">
             <a href="/">ESTIMULANTES</a>

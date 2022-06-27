@@ -45,3 +45,11 @@
   color: #FFF;
   border-top: 2px solid #000;
 }
+
+@media (max-width: 600px) {
+  .subtotal,
+.shipping,
+.total-value {
+  font-size: 0.75rem;
+}
+}

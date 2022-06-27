@@ -21,6 +21,11 @@
   padding-bottom: 40px; 
 }
 
+.header-options {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
 
 .logo {
   flex: 2;
@@ -46,6 +51,10 @@
 
 .searchInput:focus {
   outline: none;
+}
+
+.search-btn {
+  display: none;
 }
 
 .actions {
@@ -116,4 +125,47 @@
 }
 .sexshop-categories a {
   color: var(--g13);
+}
+
+@media (max-width: 1100px) {
+  .login-btn span {
+    display: none;
+  }
+  .mob-login-btn span {
+    display: none;
+  }
+}
+@media (max-width: 1000px) {
+  .searchInput {
+    display: none
+  }
+  .search-btn {
+    display: initial;
+  }
+  .searchInput.active {
+    display: initial;
+  }
+  .sexshop-categories, .categories {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding-top: 20px;
+    background: var(--p4);
+  }
+  .logo {
+    display: none;
+  }
+  .actions {
+    display: none
+  }
+  .main-menu {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .search-btn {
+    display: none;
+  }
 }

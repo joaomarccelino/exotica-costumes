@@ -4,18 +4,18 @@ import { formatPrice } from '../../utils/formatPrice';
 import './styles.css';
 export type FavItemProps = {
   id: string;
-  image: string;
+  images: string[];
   price: number;
   name: string;
 }
 
-export function FavItem({ image, price, name, id }: FavItemProps) {
+export function FavItem({ images, price, name, id }: FavItemProps) {
   return (
     <div className="fav-item">
       <div className="fav-content">
         <div className="fav-info">
-          <img src={`assets/${image}`} alt="" />
-          <span>{`R$ ${formatPrice(price)}`}</span>
+          <img src={images[0]} alt="" />
+          <span>{formatPrice(price)}</span>
         </div>
         <div><span className={"item-name"}>{name}</span></div>
       </div>

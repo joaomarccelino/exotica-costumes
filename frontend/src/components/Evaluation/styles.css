@@ -52,3 +52,12 @@
   justify-content: center;
   align-self: center;
 }
+
+@media (max-width: 800px) {
+  .ev-profile p,  .ev-text blockquote {
+    font-size: 0.75rem;
+  }
+  .ev-actions {
+    gap: 12px;
+  }
+}
