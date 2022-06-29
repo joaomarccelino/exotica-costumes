@@ -5,6 +5,7 @@ import SexShopLogo from '../../assets/img/sexshop-logo.svg';
 import { FaRegUser } from 'react-icons/fa';
 import { HiOutlineSearchCircle } from 'react-icons/hi';
 import { AiOutlineShoppingCart, AiOutlineHeart, AiOutlineBulb } from 'react-icons/ai';
+import { BsSearch } from 'react-icons/bs';
 
 import './styles.css';
 import { useStyle } from '../../hooks/StyleContext';
@@ -14,9 +15,12 @@ import { MobileMenu } from '../MobileMenu';
 import { MobileActions } from '../MobileActions';
 import { MobSearchButton } from '../MobSearchButton';
 import { MobileLogo } from '../MobileLogo';
+import { useProducts } from '../../hooks/ProductContext';
 
 export function Header() {
+  const [subcategory, setSubcategory] = useState('');
   const { theme, handleSexShop, handleRemoveSexShop, handleNight } = useStyle();
+  const { handleFilterBySubCategory } = useProducts();
   const [isAuth, setIsAuth] = useState(true);
 
   function handleShowSignIn() {
@@ -34,6 +38,16 @@ export function Header() {
     favModal?.classList.add('active');
   }
 
+  function handleShowSearchInput() {
+    const searchInput = document.querySelector('.responsive-search');
+    searchInput?.classList.toggle('active');
+  }
+
+  function handleShowAgeModal() {
+    const ageModal = document.querySelector('.age-modal');
+    ageModal?.classList.add('active');
+  }
+
   function handleLogo() {
     if (theme === 'dark') {
       return DarkLogo;
@@ -47,19 +61,37 @@ export function Header() {
   return (
     <header className="header-bg">
       <div className="container header">
+        <div className="responsive-search">
+          <input type="text" placeholder="O que você procura?" value={subcategory} onChange={(e) => setSubcategory(e.target.value)} className="searchInput" />
+          <button
+            className="empty-btn input-search"
+            onClick={() => { handleFilterBySubCategory(subcategory) }}
+          >
+            <BsSearch size={20} color={"var(--g11)"} />
+          </button>
+        </div>
         <div className="main-menu">
           <a href="/" className="logo">
             <img src={handleLogo()} alt="Exótica" />
           </a>
           <MobileLogo />
           <div className="header-options">
-            <form action="" className="search">
-              <input type="text" placeholder="O que você procura?" className="searchInput" />
-              <button className="search-btn empty-btn">
-                <HiOutlineSearchCircle size={40} color={"var(--p2)"} />
+            <div className="search">
+              <input type="text" placeholder="O que você procura?" value={subcategory} onChange={(e) => setSubcategory(e.target.value)} className="searchInput" />
+              <button
+                className="empty-btn input-search"
+                onClick={() => { handleFilterBySubCategory(subcategory) }}
+              >
+                <BsSearch size={20} color={"var(--g11)"} />
               </button>
-              <MobSearchButton />
-            </form>
+            </div>
+            <button
+              className="search-btn empty-btn"
+              onClick={handleShowSearchInput}
+            >
+              <HiOutlineSearchCircle size={40} color={"var(--p2)"} />
+            </button>
+            <MobSearchButton handleShowSearchInput={handleShowSearchInput} />
             <div className="actions">
               {
                 isAuth ?
@@ -96,7 +128,7 @@ export function Header() {
                 </div>
               </button>
             </div>
-            <MobileActions 
+            <MobileActions
               isAuth
               handleShowFav={handleShowFav}
               handleShowCart={handleShowCart}
@@ -125,7 +157,8 @@ export function Header() {
             <a href="/">BODY</a>
             {theme === 'dark' &&
               <button className="empty-btn sex-shop-cat"
-                onClick={handleSexShop}>
+                onClick={handleShowAgeModal}
+              >
                 SEX-SHOP
               </button>
             }

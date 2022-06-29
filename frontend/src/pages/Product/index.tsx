@@ -6,9 +6,9 @@ import { Evaluation } from '../../components/Evaluation';
 import { ProductImgs } from '../../components/ProductsImgs';
 import { formatPrice } from '../../utils/formatPrice';
 import { useLocation } from 'react-router-dom';
-import { ProductProps } from '../Home';
 
-import { useProducts } from '../../hooks/ProductContext';
+
+import { ProductProps, useProducts } from '../../hooks/ProductContext';
 
 type ProductData = {
   product: ProductProps;

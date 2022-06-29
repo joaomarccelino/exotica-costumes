@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import api from "../../services/api";
-import { sizePatternP, sizePatternN, categories } from '../../utils/commonData';
+import { sizePatternP, sizePatternN, categories, subCategories } from '../../utils/commonData';
 import './styles.css';
 
 type Sizes = {
@@ -13,6 +13,7 @@ type Inputs = {
   name: string;
   description: string;
   category: string;
+  subcategory: string;
   price: number;
   pattern: string;
   quantity1: string | number;
@@ -34,6 +35,7 @@ export function CadItemModal() {
       name: data.name,
       description: data.description,
       category: data.category,
+      subcategory: data.subcategory,
       status: 'ACTIVE',
       price: data.price,
       stock: [
@@ -110,33 +112,6 @@ export function CadItemModal() {
   // }
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      console.log(value)
-      const newProduct = {
-        name: value.name,
-        description: value.description,
-        category: value.category,
-        price: value.price,
-        stock: [
-          {
-            size: value.size1,
-            quantity: value.quantity1
-          },
-          {
-            size: value.size2,
-            quantity: value.quantity2
-          },
-          {
-            size: value.size3,
-            quantity: value.quantity3
-          },
-          {
-            size: value.size4,
-            quantity: value.quantity4
-          }
-        ]
-
-      }
-      setProduct(newProduct);
       if (value.pattern === 'pmg') {
         setShowSizes(true);
         setSizePattern(sizePatternP)
@@ -173,6 +148,15 @@ export function CadItemModal() {
             {categories.map((category) => {
               return (
                 <option value={category}>{category}</option>
+              )
+            })}
+          </select>
+          <label htmlFor="subcategory">Categoria</label>
+          <select {...register("subcategory", { required: true })} name="subcategory" id="subcategory">
+            <option value="" selected disabled hidden>Selecione uma sub-categoria...</option>
+            {subCategories.map((item) => {
+              return (
+                <option value={item}>{item}</option>
               )
             })}
           </select>
@@ -281,7 +265,9 @@ export function CadItemModal() {
               <input type="file" />
             </div>
           </div>
-          <button type="submit">Submit</button>
+          <div className="cad-btn">
+            <button type="submit" className="general-btn">Adicionar</button>
+          </div>
         </form>
         <button
           className="cad-close-button"
@@ -289,11 +275,6 @@ export function CadItemModal() {
         >
           X
         </button>
-        <div className="cad-btn">
-          <button className="general-btn" onClick={() => handleAddProduct()}>
-            Adicionar
-          </button>
-        </div>
       </div>
     </div>
   )

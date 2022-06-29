@@ -1,0 +1,34 @@
+.age-modal {
+  height: 100vh;
+  width: 100%; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  display: none;
+  animation: show-modal-up .8s;
+  transition: ease 1s;
+}
+
+.age-modal.active {
+  display: initial;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.age-form {
+  padding: 40px 140px;
+  background: var(--g2);
+  max-width: 300px;
+  margin: 120px auto;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  position: relative;
+}
+
+.age-form input {
+  display: block;
+}

@@ -5,10 +5,10 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import './styles.css';
 import { formatPrice } from "../../utils/formatPrice";
 import { Link } from "react-router-dom";
-import { ProductProps } from "../../pages/Home";
+import { ProductProps } from "../../hooks/ProductContext";
 import { AdmCardButtons } from "../AdmCardButtons";
 
-export function ProductCard({ id, name, images, price, stock, description, evaluations, flagged }: ProductProps) {
+export function ProductCard({ id, name, category, subcategory, images, price, stock, description, evaluations, flagged }: ProductProps) {
   const adm = false;
   const product = ({
     id,

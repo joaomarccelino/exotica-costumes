@@ -12,6 +12,7 @@ import './global.css';
 import { ProductContextProvider } from './hooks/ProductContext';
 import { MyOrders } from './pages/MyOrders';
 import { MyData } from './pages/MyData';
+import { AgeModal } from './components/AgeModal';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <SignModal />
           <CartModal />
           <FavModal />
+          <AgeModal />
           <Footer />
         </StyleContextProvider>
       </ProductContextProvider>

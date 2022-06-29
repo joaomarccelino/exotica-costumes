@@ -9,7 +9,8 @@ import { CartItem } from '../../components/CartItem';
 import './styles.css';
 import { useProducts } from '../../hooks/ProductContext';
 import { ItemResume } from '../../components/ItemResume';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import api from '../../services/api';
 
 type OrderInputs = {
   customerName: string;
@@ -18,7 +19,7 @@ type OrderInputs = {
   city: string;
   state: string;
   cep: string;
-  payment: string; 
+  payment: string;
   paymentData?: {
     cardNumber: string;
     securityCode: string;
@@ -34,6 +35,29 @@ export function Cart() {
   const [shipping, setShipping] = useState(56.50);
   const [paymentMethod, setPaymentMethod] = useState('credit');
   const { register, handleSubmit, watch, formState: { errors } } = useForm<OrderInputs>();
+  const onSubmit: SubmitHandler<OrderInputs> = async data => {
+    const newOrder = {
+      customerName: data.customerName,
+      address: data.address,
+      neighborhood: data.neighborhood,
+      city: data.city,
+      state: data.state,
+      cep: data.cep,
+      payment: data.payment,
+      paymentData: data.paymentData,
+      products: cartItems
+    }
+    const response = await api.post('https://api-exotica.herokuapp.com/order/', JSON.stringify(newOrder), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        console.log(res);
+        const modal = document.querySelector('.cad-item-bg');
+        modal?.classList.remove('active');
+      });
+  }
 
   function handleSelectPayment(method: string) {
     if (method === 'credit') setPaymentMethod('credit');
@@ -44,7 +68,7 @@ export function Cart() {
   function handleCalcTotal() {
     let sum = 0;
     cartItems.forEach(item => {
-      sum+= (item.price * item.quantity)
+      sum += (item.price * item.quantity)
     })
     setTotalValue(sum);
   }
@@ -67,7 +91,7 @@ export function Cart() {
             )
           })}
         </div>
-       <ItemResume totalValue={totalValue} shipping={shipping}  />
+        <ItemResume totalValue={totalValue} shipping={shipping} />
       </div>
       <div className="payment">
         <h2>Pagamento</h2>
@@ -79,13 +103,13 @@ export function Cart() {
             <label htmlFor="">Endereço</label>
             <input type="text" {...register("address", { required: true })} />
             <label htmlFor="">Bairro</label>
-            <input type="text"  {...register("neighborhood", { required: true })}/>
+            <input type="text"  {...register("neighborhood", { required: true })} />
             <label htmlFor="">Cidade</label>
-            <input type="text"  {...register("city", { required: true })}/>
+            <input type="text"  {...register("city", { required: true })} />
             <label htmlFor="">Estado</label>
-            <input type="text"  {...register("state", { required: true })}/>
+            <input type="text"  {...register("state", { required: true })} />
             <label htmlFor="">CEP</label>
-            <input type="text"  {...register("cep", { required: true })}/>
+            <input type="text"  {...register("cep", { required: true })} />
           </form>
           <form action="" className="payment-form">
             <h3>Forma de pagamento</h3>
@@ -109,15 +133,15 @@ export function Cart() {
               <div className="credit-form">
                 <div className="card-number">
                   <label htmlFor="cardNumber">Número do cartão</label>
-                  <input type="text" id="cardNumber"  {...register("paymentData.cardNumber", { required: true })}/>
+                  <input type="text" id="cardNumber"  {...register("paymentData.cardNumber", { required: true })} />
                 </div>
                 <div className="sec-code">
                   <label htmlFor="securityCode">Cód segurança</label>
-                  <input type="text" id="securityCode"  {...register("paymentData.securityCode", { required: true })}/>
+                  <input type="text" id="securityCode"  {...register("paymentData.securityCode", { required: true })} />
                 </div>
                 <div className="card-name">
                   <label htmlFor="cardName">Nome no cartão</label>
-                  <input type="text" id="cardName" {...register("paymentData.cardName", { required: true })}/>
+                  <input type="text" id="cardName" {...register("paymentData.cardName", { required: true })} />
                 </div>
                 <div className="exp-date">
                   <label htmlFor="">Validade</label>
