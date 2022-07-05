@@ -128,8 +128,9 @@
 }
 
 
-.categories a {
+.categories button {
   color: var(--g13);
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
 }
 
 .sex-shop-cat {
@@ -143,8 +144,9 @@
   justify-content: center;
   align-items: center;
 }
-.sexshop-categories a {
+.sexshop-categories button {
   color: var(--g13);
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
 }
 
 @media (max-width: 1100px) {

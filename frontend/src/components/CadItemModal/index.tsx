@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAuth } from "../../hooks/AuthContext";
+import { useProducts } from "../../hooks/ProductContext";
 import api from "../../services/api";
 import { sizePatternP, sizePatternN, categories, subCategories } from '../../utils/commonData';
 import './styles.css';
@@ -29,87 +31,100 @@ type Inputs = {
 export function CadItemModal() {
   const [sizePattern, setSizePattern] = useState<string[] | number[]>([]);
   const [showSizes, setShowSizes] = useState<boolean>(false);
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = async data => {
-    const newProduct = {
-      name: data.name,
-      description: data.description,
-      category: data.category,
-      subcategory: data.subcategory,
-      status: 'ACTIVE',
-      price: data.price,
-      stock: [
-        {
-          size: data.size1,
-          quantity: data.quantity1
-        },
-        {
-          size: data.size2,
-          quantity: data.quantity2
-        },
-        {
-          size: data.size3,
-          quantity: data.quantity3
-        },
-        {
-          size: data.size4,
-          quantity: data.quantity4
-        }
-      ]
+  const [image1, setImage1] = useState<FileList>();
+  const [image2, setImage2] = useState<FileList>();
+  const [image3, setImage3] = useState<FileList>();
+  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<Inputs>();
+  const { token } = useAuth();
+  const { getProducts } = useProducts();
 
-    }
-    const response = await api.post('https://api-exotica.herokuapp.com/product/', JSON.stringify(newProduct), {
+  function saveImage1(e: ChangeEvent<HTMLInputElement>) {
+    e.target.files && setImage1(e.target.files)
+  }
+
+  function saveImage2(e: ChangeEvent<HTMLInputElement>) {
+    e.target.files && setImage2(e.target.files)
+  }
+
+  function saveImage3(e: ChangeEvent<HTMLInputElement>) {
+    e.target.files && setImage3(e.target.files)
+  }
+
+  const onSubmit: SubmitHandler<Inputs> = async data => {
+    const newProduct = data.pattern === 'sexshop' ?
+      {
+        name: data.name,
+        description: data.description,
+        category: data.category,
+        subcategory: data.subcategory,
+        status: 'ACTIVE',
+        price: data.price,
+        stock: [
+          {
+            size: 'sex',
+            quantity: 3
+          }
+        ]
+      } :
+      {
+        name: data.name,
+        description: data.description,
+        category: data.category,
+        subcategory: data.subcategory,
+        status: 'ACTIVE',
+        price: data.price,
+        stock: [
+          {
+            size: data.size1,
+            quantity: data.quantity1
+          },
+          {
+            size: data.size2,
+            quantity: data.quantity2
+          },
+          {
+            size: data.size3,
+            quantity: data.quantity3
+          },
+          {
+            size: data.size4,
+            quantity: data.quantity4
+          }
+        ]
+      }
+
+    const response = await api.post('http://52.72.116.213:3000/product', JSON.stringify(newProduct), {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-access-token': token
       }
     })
       .then(res => {
-        console.log(res);
-        const modal = document.querySelector('.cad-item-bg');
-        modal?.classList.remove('active');
+        const idproduct = res.data.response.product[0].id;
+        const images = ((image1 && image2 && image3) && [image1[0], image2[0], image3[0]]) || [];
+        images.forEach(async (image) => {
+          const newImg = new FormData();
+          newImg.append('idproduct', idproduct)
+          newImg.append('status', 'ACTIVE')
+          newImg.append('image', image)
+          const response = await api.post('http://52.72.116.213:3000/product/images', newImg, {
+            headers: {
+              'x-access-token': token
+            }
+          }).then(res => {
+          });
+        })
       });
+    alert("Produto Adicionado!")
+    setShowSizes(false);
+    reset();
+    const modal = document.querySelector('.cad-item-bg');
+    modal?.classList.remove('active');
+    getProducts();
   }
-  const [product, setProduct] = useState({});
 
   const watchAllFields = watch();
 
-  // async function handleAddProduct() {
-  //   const response = await api.post('https://api-exotica.herokuapp.com/product/', JSON.stringify(product))
-  //     .then(res => {
-  //       console.log(res);
-  //       const modal = document.querySelector('.cad-item-bg');
-  //       modal?.classList.remove('active');
-  //     });
-  // }
-
-  async function handleAddProduct() {
-    let config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    const response = await api.post('https://api-exotica.herokuapp.com/product/', JSON.stringify(product), {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => {
-        console.log(res);
-        const modal = document.querySelector('.cad-item-bg');
-        modal?.classList.remove('active');
-      })
-      .catch(e => console.log(e));
-  }
-
-  // async function handleAddProduct() {
-  //   fetch('https://api-exotica.herokuapp.com/product/', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(product)
-  //   }).then(res=> console.log(res)).catch(e => console.log(e));
-  // }
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       if (value.pattern === 'pmg') {
@@ -143,30 +158,30 @@ export function CadItemModal() {
           <label htmlFor="description">Descrição</label>
           <input {...register("description", { required: true })} type="text" id="description" />
           <label htmlFor="category">Categoria</label>
-          <select {...register("category", { required: true })} name="category" id="category">
-            <option value="" selected disabled hidden>Selecione uma categoria...</option>
-            {categories.map((category) => {
+          <select defaultValue="DEFAULT" {...register("category", { required: true })} name="category" id="category">
+            <option value="DEFAULT" disabled hidden>Selecione uma categoria...</option>
+            {categories.map((category, index) => {
               return (
-                <option value={category}>{category}</option>
+                <option value={category} key={index}>{category}</option>
               )
             })}
           </select>
-          <label htmlFor="subcategory">Categoria</label>
-          <select {...register("subcategory", { required: true })} name="subcategory" id="subcategory">
-            <option value="" selected disabled hidden>Selecione uma sub-categoria...</option>
-            {subCategories.map((item) => {
+          <label htmlFor="subcategory">Sub-Categoria</label>
+          <select defaultValue="DEFAULT" {...register("subcategory", { required: true })} name="subcategory" id="subcategory">
+            <option value="DEFAULT" disabled hidden>Selecione uma sub-categoria...</option>
+            {subCategories.map((item, index) => {
               return (
-                <option value={item}>{item}</option>
+                <option value={item} key={index}>{item}</option>
               )
             })}
           </select>
           <div className="left-right-form">
             <div className="left-form">
               <label htmlFor="price">Preço</label>
-              <input {...register("price", { required: true })} type="number" name="price" id="price" />
+              <input {...register("price", { required: true })} type="number" step=".01" min="0" name="price" id="price" />
               <label htmlFor="pattern">Padrão de Tamanho</label>
-              <select {...register("pattern")} id="pattern">
-                <option value="" selected disabled hidden>Selecione um padrão...</option>
+              <select {...register("pattern")} defaultValue="DEFAULT" id="pattern">
+                <option value="DEFAULT" disabled hidden>Selecione um padrão...</option>
                 <option value="pmg">P, M, G</option>
                 <option value="number">Numérico</option>
                 <option value="sexshop">Sex-shop</option>
@@ -181,8 +196,8 @@ export function CadItemModal() {
                         id="size1"
                         {...register("size1")}
                       >
-                        {sizePattern.map(item =>
-                          <option value={item}>{item}</option>
+                        {sizePattern.map((item, index) =>
+                          <option value={item} key={index}>{item}</option>
                         )}
                       </select>
                     </div>
@@ -201,8 +216,8 @@ export function CadItemModal() {
                         id="size2"
                         {...register("size2")}
                       >
-                        {sizePattern.map(item =>
-                          <option value={item}>{item}</option>
+                        {sizePattern.map((item, index) =>
+                          <option value={item} key={index}>{item}</option>
                         )}
                       </select>
                     </div>
@@ -221,8 +236,8 @@ export function CadItemModal() {
                         id="size3"
                         {...register("size3")}
                       >
-                        {sizePattern.map(item =>
-                          <option value={item}>{item}</option>
+                        {sizePattern.map((item, index) =>
+                          <option value={item} key={index}>{item}</option>
                         )}
                       </select>
                     </div>
@@ -241,8 +256,8 @@ export function CadItemModal() {
                         id="size4"
                         {...register("size4")}
                       >
-                        {sizePattern.map(item =>
-                          <option value={item}>{item}</option>
+                        {sizePattern.map((item, index) =>
+                          <option value={item} key={index}>{item}</option>
                         )}
                       </select>
                     </div>
@@ -259,10 +274,9 @@ export function CadItemModal() {
             </div>
             <div className="right-form">
               <h2>Adicione as fotos: </h2>
-              <input type="file" />
-              <input type="file" />
-              <input type="file" />
-              <input type="file" />
+              <input type="file" accept=".png, .jpg" onChange={saveImage1} />
+              <input type="file" accept=".png, .jpg" onChange={saveImage2} />
+              <input type="file" accept=".png, .jpg" onChange={saveImage3} />
             </div>
           </div>
           <div className="cad-btn">

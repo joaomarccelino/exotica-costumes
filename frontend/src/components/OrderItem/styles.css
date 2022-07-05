@@ -69,3 +69,11 @@
   color: var(--g10);
   margin-bottom: 8px;
 }
+
+
+@media (max-width: 900px) {
+  .order-data {
+    flex-direction: column;
+    gap: 40px;
+  }
+}

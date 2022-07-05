@@ -1,9 +1,11 @@
 .evaluation-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0 120px;
   border-bottom: 1px solid var(--g9);
   margin-top: 20px;
+  margin-bottom: 20px;
   padding-bottom: 20px;
 }
 

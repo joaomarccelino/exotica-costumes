@@ -16,12 +16,14 @@
 }
 
 .sign-modal {
-  padding: 40px 140px;
+  padding: 40px 140px 80px 140px;
   background: var(--g2);
   max-width: 840px;
-  margin: 120px auto;
+  height: 100%;
+  margin: 80px auto;
   border-radius: 4px;
   position: relative;
+  overflow-y: scroll;
 }
 
 .sign-modal h1 {
@@ -78,6 +80,10 @@
 
 .sign-btn {
   text-align: center;
+}
+
+.set-new-sign {
+  margin-bottom: 180px;
 }
 
 .close-button {

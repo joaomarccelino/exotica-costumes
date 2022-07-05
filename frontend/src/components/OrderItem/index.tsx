@@ -5,22 +5,30 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 
 import './styles.css';
 import { useState } from "react";
+import { Address } from "../../hooks/AuthContext";
+import { formatDate } from "../../utils/formatDate";
+
+export type OrderProductProps = {
+  category: string;
+  description: string;
+  idproduct: number | string;
+  image: string;
+  itemPrice: number;
+  name: string;
+  price: number;
+  quantity: number;
+  size: string;
+  subcategory: string;  
+}
 
 export type OrderItemProps = {
   orderNumber: string;
   status: string;
   payment: string;
   date: string;
-  details: {
-    address: {
-      street: string;
-      neighborhood: string;
-      cep: string;
-      city: string;
-      state: string;
-    },
-    items: CartItemProps[];
-  }
+  shipping_address: Address;
+  total_price: number;
+  products: OrderProductProps[];
 }
 
 export function OrderItem(
@@ -29,7 +37,9 @@ export function OrderItem(
     status,
     payment,
     date,
-    details
+    shipping_address,
+    products,
+    total_price
   }: OrderItemProps) {
   const [showDetails, setShowDetails] = useState(false);
   function handleShowDetails() {
@@ -71,23 +81,29 @@ export function OrderItem(
         <div className="order-details">
           <div className="order-address">
             <h3>Endereço</h3>
-            <p>{details.address.street}</p>
-            <p>{details.address.neighborhood}</p>
-            <p>{`CEP: ${details.address.cep} - ${details.address.city}/${details.address.state}`}</p>
+            <p>{shipping_address.address}</p>
+            <p>{shipping_address.district}</p>
+            <p>{`CEP: ${shipping_address.cep} - ${shipping_address.city}/${shipping_address.state}`}</p>
           </div>
           <h3>Produtos</h3>
           <div className="cart-content">
             <div className="cart-items">
-              {details.items.map(item => {
+              {products.map(product => {
                 return (
                   <CartItem
-                    key={item.id}
-                    {...item}
+                    key={product.idproduct}
+                    name={product.name}
+                    image={product.image}
+                    price={product.price}
+                    quantity={product.quantity}
+                    size={product.size}
+                    id={product.idproduct}
+                    orderItem
                   />
                 )
               })}
             </div>
-            <ItemResume totalValue={259.90} shipping={125} />
+            <ItemResume totalValue={total_price} shipping={125} />
           </div>
         </div>
       }

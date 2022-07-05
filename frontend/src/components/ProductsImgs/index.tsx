@@ -10,7 +10,8 @@ type ProductImgsProps = {
 
 export function ProductImgs({images}: ProductImgsProps) {
 
-  const thumbs = document.querySelectorAll('.thumbImg')
+  const thumbs = document.querySelectorAll('.thumbImg');
+  const imgBaseURL = 'http://52.72.116.213:3000'
 
   function selectImage(e: any) {
     const showImg = document.querySelector('.mainProductImg') as HTMLImageElement;
@@ -30,11 +31,11 @@ export function ProductImgs({images}: ProductImgsProps) {
 
   return (
     <div className="product-images">
-      <img src={images[0]} alt="Image 1" className="mainProductImg" />
+      <img src={`${imgBaseURL}/${images[0]}`} alt="Image 1" className="mainProductImg" />
       <div className="product-thumbs">
-        <img src={images[0]} alt="" className="thumbImg selected-img" />
-        <img src={images[1]} alt="" className="thumbImg" />
-        <img src={images[2]} alt="" className="thumbImg" />
+        <img src={`${imgBaseURL}/${images[0]}`} alt="" className="thumbImg selected-img" />
+        <img src={`${imgBaseURL}/${images[1]}`} alt="" className="thumbImg" />
+        <img src={`${imgBaseURL}/${images[2]}`} alt="" className="thumbImg" />
       </div>
     </div>
   )

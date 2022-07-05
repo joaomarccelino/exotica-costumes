@@ -4,9 +4,11 @@ import DatePicker from 'react-datepicker';
 
 import "react-datepicker/dist/react-datepicker.css";
 import './style.css';
+import { useProducts } from '../../hooks/ProductContext';
 
 export function AgeModal() {
   const [birthDay, setBirthDay] = useState<Date>();
+  const {handleGetSexShopItems} = useProducts();
   const { handleSexShop } = useStyle();
 
   function handleHideAgeModal() {
@@ -20,6 +22,7 @@ export function AgeModal() {
     if (age >= 18) {
       handleHideAgeModal()
       handleSexShop()
+      handleGetSexShopItems();
     } else {
       alert("Você precisa ter mais de 18 anos!");
     }

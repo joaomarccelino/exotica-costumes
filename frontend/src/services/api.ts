@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://api-exotica.herokuapp.com/product/',
+    baseURL: 'http://52.72.116.213:3000',
 });
 
 export default api;

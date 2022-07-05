@@ -7,6 +7,11 @@ import './styles.css';
 export function MobileMenu() {
   const [active, setActive] = useState(false);
   const { theme, handleSexShop, handleRemoveSexShop, handleNight } = useStyle();
+
+  function handleShowAgeModal() {
+    const ageModal = document.querySelector('.age-modal');
+    ageModal?.classList.add('active');
+  }
   return (
     <div className="mobile-menu">
       {active ?
@@ -37,13 +42,13 @@ export function MobileMenu() {
               <a href="/">BODY</a>
               {theme === 'dark' &&
                 <button className="empty-btn sex-shop-cat"
-                  onClick={handleSexShop}>
+                  onClick={handleShowAgeModal}>
                   SEX-SHOP
                 </button>
               }
               <a href="/">MODELADOR</a>
               <a href="/">PLUS</a>
-              <a href="/">FITNESS</a>
+              <a href="/">LINHA NOITE</a>
             </div>
           }
         </>

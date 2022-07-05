@@ -13,29 +13,32 @@ import { ProductContextProvider } from './hooks/ProductContext';
 import { MyOrders } from './pages/MyOrders';
 import { MyData } from './pages/MyData';
 import { AgeModal } from './components/AgeModal';
+import { AuthContextProvider } from './hooks/AuthContext';
 
 function App() {
   return (
     <>
-      <ProductContextProvider>
-        <StyleContextProvider>
-          <Header />
-          <Router>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/:id" element={<Product />} />
-              <Route path="/carrinho" element={<Cart />} />
-              <Route path="/pedidos" element={<MyOrders />} />
-              <Route path="/meus-dados" element={<MyData />} />
-            </Routes>
-          </Router>
-          <SignModal />
-          <CartModal />
-          <FavModal />
-          <AgeModal />
-          <Footer />
-        </StyleContextProvider>
-      </ProductContextProvider>
+      <AuthContextProvider>
+        <ProductContextProvider>
+          <StyleContextProvider>
+            <Header />
+            <Router>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/:id" element={<Product />} />
+                <Route path="/carrinho" element={<Cart />} />
+                <Route path="/pedidos" element={<MyOrders />} />
+                <Route path="/meus-dados" element={<MyData />} />
+              </Routes>
+            </Router>
+            <SignModal />
+            <CartModal />
+            <FavModal />
+            <AgeModal />
+            <Footer />
+          </StyleContextProvider>
+        </ProductContextProvider>
+      </AuthContextProvider>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { createContext, ReactNode, useEffect } from "react"
 import { usePersistedState } from "../../utils/usePersistedState";
+import { useProducts } from "../ProductContext";
 
 type SwitchContextType = {
   theme: string;
@@ -17,6 +18,7 @@ export const StyleContext = createContext({} as SwitchContextType)
 
 export function StyleContextProvider({ children }: SwitchContextProps) {
   const [theme, setTheme] = usePersistedState<string>('theme', 'dark')
+  const {getProducts} = useProducts();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -38,6 +40,7 @@ export function StyleContextProvider({ children }: SwitchContextProps) {
 
   function handleRemoveSexShop() {
     setTheme(theme === 'sexshop' ? 'dark' : 'sexshop');
+    getProducts();
   }
 
   function handleNight() {

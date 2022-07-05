@@ -9,18 +9,27 @@ import { useLocation } from 'react-router-dom';
 
 
 import { ProductProps, useProducts } from '../../hooks/ProductContext';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useAuth } from '../../hooks/AuthContext';
+import api from '../../services/api';
 
 type ProductData = {
   product: ProductProps;
 }
 
+type CommentInput = {
+  comment: string;
+}
+
 
 export function Product() {
   const [size, setSize] = useState<number | string>(0);
+  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<CommentInput>();
   const [quantity, setQuantity] = useState(0);
   const [flagged, setFlagged] = useState(false);
 
   const { favItems } = useProducts();
+  const { user, token } = useAuth();
 
   const { handleAddItemToCart, handleAddFavItem } = useProducts();
 
@@ -50,7 +59,7 @@ export function Product() {
     })
   }
 
-  const newItem = { id: product.id, name: product.name, images: product.images, quantity, price: product.price }
+  const newItem = { id: product.id, name: product.name, image: product.images[0], quantity, price: product.price, size: size }
   const newFav = { id: product.id, name: product.name, images: product.images, price: product.price }
 
   function handleFlagItem() {
@@ -58,10 +67,30 @@ export function Product() {
     handleAddFavItem(newFav);
   }
 
+  const onSubmit: SubmitHandler<CommentInput> = async data => {
+    const newComment = {
+      idproduct: product.id,
+      iduser: user.iduser,
+      name: user.name,
+      text: data.comment
+    }
+
+    const response = await api.post('http://52.72.116.213:3000/product/comment', JSON.stringify(newComment), {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      }
+    }).then(res => {
+      alert("Comentário Adicionado!")
+      reset();
+    })
+      .catch(err => console.log(err));
+    reset();
+  }
+
   useEffect(() => {
     checkFlag();
-    console.log(size, quantity)
-  }, [])
+  })
 
   return (
     <>
@@ -108,7 +137,7 @@ export function Product() {
           <button
             className="general-btn"
             onClick={() => handleAddItemToCart(newItem)}
-            disabled={product.stock.length === 0 || quantity <= 0 || size == 0}
+            disabled={product.stock.length === 0 || quantity <= 0 || size === 0}
           >
             ADICIONAR AO CARRINHO
           </button>
@@ -123,28 +152,28 @@ export function Product() {
       <section className="container evaluations-container">
         <h2>Avaliações</h2>
         <div className="evaluations">
-          {product.evaluations?.map(item => {
+          {product.comments?.map((item, index) => {
             return (
               <Evaluation
-                by={item.by}
-                on={item.on}
+                key={index}
+                iduser={item.iduser}
+                name={item.name}
+                date={item.date}
                 text={item.text}
-                like={item.like}
-                dislike={item.dislike}
               />
             )
           })}
         </div>
-        <div className="add-eval">
+        <form className="add-eval" onSubmit={handleSubmit(onSubmit)}>
           <textarea
             placeholder="Digite seu comentário"
-            name="new-eval"
             id="new-eval"
+            {...register('comment')}
             cols={100}
             rows={8}
           ></textarea>
           <button className="general-btn">Adicionar</button>
-        </div>
+        </form>
       </section>
     </>
   )

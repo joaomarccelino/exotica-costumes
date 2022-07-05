@@ -1,81 +1,52 @@
-import { OrderItem } from "../../components/OrderItem"
+import { useEffect, useState } from "react";
+import { CartItemProps } from "../../components/CartItem";
+import { OrderItem, OrderProductProps } from "../../components/OrderItem"
+import { Address, useAuth } from "../../hooks/AuthContext";
+import api from "../../services/api";
 import './styles.css';
 
+type Pay = {
+  type: string;
+  cardNumber?: string;
+  cardName?: string;
+  expirationMonth?: string;
+  expirationYear?: string;
+  portion?: number;
+  pix_key?: string;
+  boleto_number?: string;
+}
+
+type Order = {
+  idorder: string;
+  status: string;
+  date: string;
+  shipping_price: number;
+  total_price: number;
+  user_address_id?: string;
+  shipping_address?: Address;
+  payment: Pay;
+  products: OrderProductProps[];
+}
+
 export function MyOrders() {
-  const orders = [
-    {
-      orderNumber: "123456787",
-      status: "Entregue",
-      payment: "Cartão de Crédito",
-      date: "16/12/1993",
-      details: {
-        address: {
-          street: "Rua Paulino Hermínio Brisola, 39",
-          neighborhood: "Jardim São Carlos",
-          cep: "18230000",
-          city: "São Miguel Arcanjo",
-          state: "SP"
-        },
-        items: [
-          {
-            id: "123",
-            name: "Body Em Microfibra E Renda White Party",
-            images: ["prod-test1.jpg"],
-            price: 59.90,
-            quantity: 3,
-          }
-        ]
+  const { user, token } = useAuth();
+  const [orders, setOrders] = useState<Order[]>();
+  async function getOrders() {
+    console.log(token);
+    const response = await api.get(`/order/${user.iduser}`, {
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
       }
-    },
-    {
-      orderNumber: "123456788",
-      status: "Entregue",
-      payment: "Cartão de Crédito",
-      date: "16/12/1993",
-      details: {
-        address: {
-          street: "Rua Paulino Hermínio Brisola, 39",
-          neighborhood: "Jardim São Carlos",
-          cep: "18230000",
-          city: "São Miguel Arcanjo",
-          state: "SP"
-        },
-        items: [
-          {
-            id: "456",
-            name: "Body Em Microfibra E Renda White Party",
-            images: ["prod-test1.jpg"],
-            price: 59.90,
-            quantity: 3,
-          }
-        ]
-      }
-    },
-    {
-      orderNumber: "123456789",
-      status: "Entregue",
-      payment: "Cartão de Crédito",
-      date: "16/12/1993",
-      details: {
-        address: {
-          street: "Rua Paulino Hermínio Brisola, 39",
-          neighborhood: "Jardim São Carlos",
-          cep: "18230000",
-          city: "São Miguel Arcanjo",
-          state: "SP"
-        },
-        items: [
-          {
-            id: "789",
-            name: "Body Em Microfibra E Renda White Party",
-            images: ["prod-test1.jpg"],
-            price: 59.90,
-            quantity: 3,
-          }
-        ]
-      }
-    }
-  ]
+    });
+    const data = response.data.orders;
+    console.log(response.data.orders);
+    setOrders(data);
+  }
+
+  useEffect(() => {
+    if(user.iduser !== undefined) getOrders();
+  }, [user.iduser])
 
   return (
     <main className="container my-orders">
@@ -85,12 +56,14 @@ export function MyOrders() {
           orders?.map((item) => {
             return (
               <OrderItem
-                key={item.orderNumber}
-                orderNumber={item.orderNumber}
+                key={item.idorder}
+                orderNumber={item.idorder}
                 status={item.status}
-                payment={item.payment}
+                payment={item.payment.type}
                 date={item.date}
-                details={item.details}
+                products={item.products}
+                total_price={item.total_price}
+                shipping_address={item.shipping_address || {} as Address}
               />
             )
           })

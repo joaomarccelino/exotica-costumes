@@ -16,12 +16,14 @@ import { MobileActions } from '../MobileActions';
 import { MobSearchButton } from '../MobSearchButton';
 import { MobileLogo } from '../MobileLogo';
 import { useProducts } from '../../hooks/ProductContext';
+import { useAuth } from '../../hooks/AuthContext';
 
 export function Header() {
   const [subcategory, setSubcategory] = useState('');
+  const { user } = useAuth();
   const { theme, handleSexShop, handleRemoveSexShop, handleNight } = useStyle();
   const { handleFilterBySubCategory } = useProducts();
-  const [isAuth, setIsAuth] = useState(true);
+
 
   function handleShowSignIn() {
     const signModal = document.querySelector('.sign-bg')
@@ -94,7 +96,7 @@ export function Header() {
             <MobSearchButton handleShowSearchInput={handleShowSearchInput} />
             <div className="actions">
               {
-                isAuth ?
+                (user.status === 'ACTIVE' || user.status === 'ADM') ?
                   <AuthMenu /> :
                   <button
                     className="login-btn header-btn"
@@ -139,22 +141,22 @@ export function Header() {
         <MobileMenu />
         {theme === 'sexshop' ?
           <div className="sexshop-categories">
-            <a href="/">ESTIMULANTES</a>
-            <a href="/">MASSAGEM</a>
+            <button className="empty-btn" onClick={() => { handleFilterBySubCategory("Estimulantes") }}>ESTIMULANTES</button>
+            <button className="empty-btn" onClick={() => { handleFilterBySubCategory("Massagem") }}>MASSAGEM</button>
             <button
               className=" empty-btn sex-shop-cat"
               onClick={handleRemoveSexShop}
             >
               MODA ÍNTIMA
             </button>
-            <a href="/">FANTASIAS</a>
-            <a href="/">PRÓTESES</a>
+            <button className="empty-btn" onClick={() => { handleFilterBySubCategory("Fantasias") }}>FANTASIAS</button>
+            <button className="empty-btn" onClick={() => { handleFilterBySubCategory("Próteses") }} >PRÓTESES</button>
           </div>
           :
           <div className="categories">
-            <a href="/">SUTIÃ</a>
-            <a href="/">CALCINHA</a>
-            <a href="/">BODY</a>
+            <button className="empty-btn" onClick={() => { handleFilterBySubCategory("Sutiã") }}>SUTIÃ</button>
+            <button className="empty-btn" onClick={() => { handleFilterBySubCategory("Calcinha") }}>CALCINHA</button>
+            <button className="empty-btn" onClick={() => { handleFilterBySubCategory("Body") }}>BODY</button>
             {theme === 'dark' &&
               <button className="empty-btn sex-shop-cat"
                 onClick={handleShowAgeModal}
@@ -162,9 +164,9 @@ export function Header() {
                 SEX-SHOP
               </button>
             }
-            <a href="/">MODELADOR</a>
-            <a href="/">PLUS</a>
-            <a href="/">FITNESS</a>
+            <button className="empty-btn"  onClick={() => { handleFilterBySubCategory("Modelador")}}>MODELADOR</button>
+            <button className="empty-btn"  onClick={() => { handleFilterBySubCategory("Plus")}}>PLUS</button>
+            <button className="empty-btn"  onClick={() => { handleFilterBySubCategory("Linha Noite")}}>LINHA NOITE</button>
           </div>
         }
       </div>

@@ -4,14 +4,13 @@ import {FaRegUser} from 'react-icons/fa';
 import './styles.css';
 
 export type EvaluationProps = {
-  by: string;
-  on: string;
+  iduser: string
+  name: string;
+  date: string;
   text: string;
-  like: boolean;
-  dislike: boolean;
 }
 
-export function Evaluation({ by, on, text, like, dislike }: EvaluationProps) {
+export function Evaluation({ iduser, name, date, text}: EvaluationProps) {
 
   function handleSetLike() {
 
@@ -27,22 +26,14 @@ export function Evaluation({ by, on, text, like, dislike }: EvaluationProps) {
         <div className="ev-icon">
           <FaRegUser size={40} color={"var(--p2)"} />
         </div>
-        <p>Por: <span>{by}</span></p>
-        <p>Em: <span>{on}</span></p>
+        <p>Por: <span>{name}</span></p>
+        <p>Em: <span>{date}</span></p>
       </div>
       <div className="ev-text">
         <blockquote>
           {text}
         </blockquote>
-      </div>
-      <div className="ev-actions">
-        <button className="empty-btn">
-          <BiLike color={like ? 'var(--p2)' : 'var(--g8)'} size={40} />
-        </button>
-        <button className="empty-btn">
-          <BiDislike color={dislike ? 'var(--p2)' : 'var(--g8)'} size={40} />
-        </button>
-      </div>
+      </div>   
     </div>
   )
 }

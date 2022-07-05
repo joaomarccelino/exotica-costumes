@@ -9,13 +9,13 @@ type Size = {
   quantity: number;
 }
 
-type Evaluation = {
+type Comment = {
   id: string;
-  by: string;
-  on: string;
+  idproduct: string;
+  iduser: string;
+  name: string;
   text: string;
-  like: boolean;
-  dislike: boolean;
+  date: string;
 }
 
 export type ProductProps = {
@@ -28,17 +28,24 @@ export type ProductProps = {
   price: number;
   stock: Size[];
   flagged?: boolean;
-  evaluations: Evaluation[];
+  comments: Comment[];
 }
 
 type ProductContextType = {
   products: ProductProps[];
+  selectedProduct: ProductProps;
   cartItems: CartItemProps[];
   favItems: FavItemProps[];
   handleAddItemToCart(cartItem: CartItemProps): void;
   handleAddFavItem(favItem: FavItemProps): void;
   handleUpdateCart(newItems: CartItemProps[]): void;
+  handleUpdateFav(newItems: FavItemProps[]): void;
   handleFilterBySubCategory(subcategory: string): void;
+  handleSetSelectedItem(item: ProductProps): void;
+  handleGetSexShopItems(): void;
+  handleDeleteItem(): void;
+  handleInactivateItem(): void;
+  getProducts(): void;
 }
 
 type ProductContextProps = {
@@ -49,23 +56,27 @@ export const ProductContext = createContext({} as ProductContextType)
 
 export function ProductContextProvider({ children }: ProductContextProps) {
   const [products, setProducts] = useState<ProductProps[]>([]);
+  const [allProducts, setAllProducts] = useState<ProductProps[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<ProductProps>(products[0]);
+  const [orders, setOrders] = useState([]);
   const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
   const [favItems, setFavItems] = useState<FavItemProps[]>([]);
 
   async function getProducts() {
-    const response = await api.get('');
+    const response = await api.get('/product');
     const data = response.data.response.products;
-    console.table(data);
-    setProducts(data);
+    const filteredData = data.filter((item: ProductProps) => item.category === "Moda Íntima");
+    setAllProducts(data);
+    setProducts(filteredData);
   }
 
-  function getCartItems() {
-    const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');
+  async function getCartItems() {
+    const cartData = await JSON.parse(localStorage.getItem('cartItem') || '[]');
     cartData && setCartItems(cartData);
   }
 
-  function getFavItems() {
-    const favData = JSON.parse(localStorage.getItem('favItem') || '[]');
+  async function getFavItems() {
+    const favData = await JSON.parse(localStorage.getItem('favItem') || '[]');
     favData && setFavItems(favData);
   }
   useEffect(() => {
@@ -75,34 +86,72 @@ export function ProductContextProvider({ children }: ProductContextProps) {
   }, []);
 
   function handleAddItemToCart(cartItem: CartItemProps) {
-    console.log("Clicou");
     const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');
     localStorage.setItem('cartItem', JSON.stringify([...cartData, cartItem]));
-    alert("Item adicionado com sucesso!");
+    alert("Item adicionado ao carrinho!");
   }
 
   function handleUpdateCart(newItems: CartItemProps[]) {
     localStorage.setItem('cartItem', JSON.stringify(newItems));
-    const cartData = JSON.parse(localStorage.getItem('cartItem') || '[]');
-    console.log(cartData);
     setCartItems(newItems);
+    alert("Carrinho atualizado!");
+  }
+
+  function handleUpdateFav(newItems: FavItemProps[]) {
+    localStorage.setItem('favItem', JSON.stringify(newItems));
+    setFavItems(newItems);
+    alert("Favorito removido!");
   }
 
   function handleAddFavItem(favItem: FavItemProps) {
     const favData = JSON.parse(localStorage.getItem('favItem') || '[]');
     localStorage.setItem('favItem', JSON.stringify([...favData, favItem]));
-    alert("Item adicionado com sucesso!");
+    alert("Favorito adicionado!");
+  }
+
+  function handleGetSexShopItems() {
+    const sexShopProducts = allProducts.filter(item => item.category === 'SexShop');
+    setProducts(sexShopProducts);
   }
 
   function handleFilterBySubCategory(subcategory: string) {
-    const filterProducts = products.filter(item => item.category == subcategory);
-    console.log(filterProducts)
+    const filterProducts = allProducts.filter(item => item.subcategory === subcategory);
+    setProducts(filterProducts)
   }
 
+  function handleSetSelectedItem(item: ProductProps) {
+    setSelectedProduct(item);
+    const stockModal = document.querySelector('.stock-modal-bg')
+    stockModal?.classList.add('active');
+  }
 
+  function handleDeleteItem() {
+
+  }
+
+  function handleInactivateItem() {
+
+  }
 
   return (
-    <ProductContext.Provider value={{ products, cartItems, favItems, handleAddItemToCart, handleAddFavItem, handleUpdateCart, handleFilterBySubCategory }}>
+    <ProductContext.Provider
+      value={
+        {
+          products,
+          selectedProduct,
+          cartItems,
+          favItems,
+          handleAddItemToCart,
+          handleAddFavItem,
+          handleUpdateCart,
+          handleUpdateFav,
+          handleFilterBySubCategory,
+          handleSetSelectedItem,
+          handleGetSexShopItems,
+          handleDeleteItem,
+          handleInactivateItem,
+          getProducts
+        }}>
       {children}
     </ProductContext.Provider>
   )

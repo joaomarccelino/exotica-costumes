@@ -1,3 +1,6 @@
+.my-orders {
+  min-height: 70vh;
+}
 .my-orders h1{
   text-align: center;
   text-transform: uppercase;

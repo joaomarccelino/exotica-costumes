@@ -5,11 +5,15 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import './styles.css';
 import { formatPrice } from "../../utils/formatPrice";
 import { Link } from "react-router-dom";
-import { ProductProps } from "../../hooks/ProductContext";
+import { ProductProps, useProducts } from "../../hooks/ProductContext";
 import { AdmCardButtons } from "../AdmCardButtons";
+import { useAuth } from "../../hooks/AuthContext";
+import { confirmAlert } from "react-confirm-alert";
 
-export function ProductCard({ id, name, category, subcategory, images, price, stock, description, evaluations, flagged }: ProductProps) {
-  const adm = false;
+export function ProductCard({ id, name, category, subcategory, images, price, stock, description, comments, flagged }: ProductProps) {
+  const { user } = useAuth();
+  const { handleSetSelectedItem, handleAddFavItem } = useProducts();
+  const adm = (user.status === 'ADM');
   const product = ({
     id,
     name,
@@ -17,19 +21,57 @@ export function ProductCard({ id, name, category, subcategory, images, price, st
     price,
     stock,
     description,
-    evaluations
+    comments
   })
   const [itemFlag, setItemFlag] = useState(flagged);
   const portion = (price / 3);
   const url = name.toLowerCase().replaceAll(' ', '-');
+  const imgBaseURL = 'http://52.72.116.213:3000';
+
+  const newFav = { id: product.id, name: product.name, images: product.images, price: product.price }
 
   function handleFlagItem() {
-    setItemFlag(!itemFlag);
+    setItemFlag(true);
+    handleAddFavItem(newFav);
   }
+
+  function handleEditItem() {
+    const selProduct = {
+      id,
+      name,
+      category,
+      subcategory,
+      images,
+      price,
+      stock,
+      description,
+      comments,
+      flagged
+    }
+    handleSetSelectedItem(selProduct);
+  }
+
+  function handleDeleteItem() {
+    // confirmAlert({
+    //   title: 'Apagar Item',
+    //   message: 'Você deseja: ',
+    //   buttons: [
+    //     {
+    //       label: 'Inativar item',
+    //       onClick: handleEditItem
+    //     },
+    //     {
+    //       label: 'Apagar item',
+    //       onClick: () => alert('Click No')
+    //     }
+    //   ]
+    // });
+  };
+
   return (
     <div className="product-card">
       <Link to={`/${url}`} state={{ product }}>
-        <img src={images[0]} alt={name} />
+        <img src={`${imgBaseURL}/${images[2]}`} alt={name} />
       </Link>
       <span className="card-prod-price">{formatPrice(price)}</span>
       <p>em <span className="color-text">{`até 3x de ${formatPrice(portion)} sem juros`}</span></p>
@@ -39,8 +81,11 @@ export function ProductCard({ id, name, category, subcategory, images, price, st
           <AiOutlineHeart size={25} color={flagged ? "#FFF" : "var(--p2)"} />
         </div>
       </button>
-      { adm && 
-        <AdmCardButtons />
+      {adm &&
+        <AdmCardButtons
+          onDelete={handleDeleteItem}
+          onEdit={handleEditItem}
+        />
       }
     </div>
   )

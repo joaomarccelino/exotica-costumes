@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useProducts } from '../../hooks/ProductContext';
+import { shipping } from '../../utils/commonData';
 import { formatPrice } from '../../utils/formatPrice';
 import { CartItem } from '../CartItem';
 import './styles.css';
@@ -12,8 +13,6 @@ export function CartModal() {
   }
 
   const { cartItems } = useProducts();
-
-  const shipping = 39.9;
 
   function handleCalcTotal() {
     let sum = 0;
@@ -35,6 +34,7 @@ export function CartModal() {
           <CartItem
             key={item.id}
             {...item}
+            showDelete
           />
         )}
       </div>

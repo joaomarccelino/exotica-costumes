@@ -4,17 +4,21 @@ import { BsCreditCard } from 'react-icons/bs';
 import { CgRadioCheck, CgRadioChecked } from 'react-icons/cg';
 import { RiBillLine } from 'react-icons/ri';
 
-import { months, years, paymentOptions } from '../../utils/commonData';
+import { months, years, paymentOptions, shipping } from '../../utils/commonData';
 import { CartItem } from '../../components/CartItem';
 import './styles.css';
 import { useProducts } from '../../hooks/ProductContext';
 import { ItemResume } from '../../components/ItemResume';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import api from '../../services/api';
+import { Address, useAuth } from '../../hooks/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { formatPrice } from '../../utils/formatPrice';
+import { formatDate } from '../../utils/formatDate';
 
 type OrderInputs = {
   customerName: string;
-  address: string;
+  address: Address;
   neighborhood: string;
   city: string;
   state: string;
@@ -31,31 +35,48 @@ type OrderInputs = {
 }
 
 export function Cart() {
+  const navigate = useNavigate()
+  const { token, user } = useAuth();
   const [totalValue, setTotalValue] = useState(0);
-  const [shipping, setShipping] = useState(56.50);
+  const [newAddress, setNewAddress] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('credit');
+  const { cartItems } = useProducts();
+
+  function handleShowNewAddressForm() {
+    setNewAddress(!newAddress);
+  }
+
+  const orderItems = cartItems.map(item => {
+    return {
+      idproduct: item.id,
+      quantity: item.quantity,
+      size: item.size
+    }
+  })
+
   const { register, handleSubmit, watch, formState: { errors } } = useForm<OrderInputs>();
   const onSubmit: SubmitHandler<OrderInputs> = async data => {
     const newOrder = {
-      customerName: data.customerName,
-      address: data.address,
-      neighborhood: data.neighborhood,
-      city: data.city,
-      state: data.state,
-      cep: data.cep,
-      payment: data.payment,
-      paymentData: data.paymentData,
-      products: cartItems
+      iduser: user.iduser,
+      status: "WPAYMENT",
+      date: formatDate(new Date()),
+      shipping_price: shipping,
+      total_price: totalValue,
+      user_address_id: user.address[0].idaddress,
+      pay: {...data.paymentData, type: paymentMethod},
+      products: orderItems
     }
-    const response = await api.post('https://api-exotica.herokuapp.com/order/', JSON.stringify(newOrder), {
+    const response = await api.post('http://52.72.116.213:3000/order/', JSON.stringify(newOrder), {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-access-token': token
       }
     })
       .then(res => {
         console.log(res);
-        const modal = document.querySelector('.cad-item-bg');
-        modal?.classList.remove('active');
+        alert("Pedido enviado!");
+        localStorage.removeItem('cartItem');
+        navigate('/');
       });
   }
 
@@ -64,7 +85,6 @@ export function Cart() {
     if (method === 'pix') setPaymentMethod('pix');
     if (method === 'ticket') setPaymentMethod('ticket');
   }
-  const { cartItems } = useProducts();
   function handleCalcTotal() {
     let sum = 0;
     cartItems.forEach(item => {
@@ -85,8 +105,14 @@ export function Cart() {
           {cartItems.map(item => {
             return (
               <CartItem
-                key={item.id}
-                {...item}
+              key={item.id}
+              name={item.name}
+              image={item.image}
+              price={item.price}
+              quantity={item.quantity}
+              size={item.size}
+              id={item.id}
+              showDelete
               />
             )
           })}
@@ -96,22 +122,45 @@ export function Cart() {
       <div className="payment">
         <h2>Pagamento</h2>
         <div className="payment-forms">
-          <form action="" className="delivery-form">
-            <h3>Entrega</h3>
-            <label htmlFor="">Nome</label>
-            <input type="text" {...register("customerName", { required: true })} />
-            <label htmlFor="">Endereço</label>
-            <input type="text" {...register("address", { required: true })} />
-            <label htmlFor="">Bairro</label>
-            <input type="text"  {...register("neighborhood", { required: true })} />
-            <label htmlFor="">Cidade</label>
-            <input type="text"  {...register("city", { required: true })} />
-            <label htmlFor="">Estado</label>
-            <input type="text"  {...register("state", { required: true })} />
-            <label htmlFor="">CEP</label>
-            <input type="text"  {...register("cep", { required: true })} />
-          </form>
-          <form action="" className="payment-form">
+          {
+            newAddress ?
+              <div className="delivery-form">
+                <h3>Entrega</h3>
+                <label htmlFor="">Nome</label>
+                <input type="text" {...register("customerName", { required: true })} />
+                <label htmlFor="">Endereço</label>
+                <input type="text" {...register("address", { required: true })} />
+                <label htmlFor="">Bairro</label>
+                <input type="text"  {...register("neighborhood", { required: true })} />
+                <label htmlFor="">Cidade</label>
+                <input type="text"  {...register("city", { required: true })} />
+                <label htmlFor="">Estado</label>
+                <input type="text"  {...register("state", { required: true })} />
+                <label htmlFor="">CEP</label>
+                <input type="text"  {...register("cep", { required: true })} />
+                <div className="address-btn">
+                  <button className="general-btn" onClick={handleShowNewAddressForm}>Utilizar endereço já cadastrado</button>
+                </div>
+              </div> :
+              <div className="delivery-form">
+                <h3>Entrega</h3>
+                {(user.iduser !== undefined) &&<select name="address" id="">
+                  <option value="" selected disabled hidden>Selecione um endereço</option>
+                  {
+                    user &&
+                    user.address.map(address => {
+                      return (
+                        <option value={address.idaddress}>{address.name}</option>
+                      )
+                    })
+                  }
+                </select>}
+                <div className="address-btn">
+                  <button className="general-btn" onClick={handleShowNewAddressForm}>Cadastrar novo endereço</button>
+                </div>
+              </div>
+          }
+          <div className="payment-form">
             <h3>Forma de pagamento</h3>
             <div className="payment-input">
               <button
@@ -133,20 +182,20 @@ export function Cart() {
               <div className="credit-form">
                 <div className="card-number">
                   <label htmlFor="cardNumber">Número do cartão</label>
-                  <input type="text" id="cardNumber"  {...register("paymentData.cardNumber", { required: true })} />
+                  <input type="text" id="cardNumber"  {...register("paymentData.cardNumber")} />
                 </div>
                 <div className="sec-code">
                   <label htmlFor="securityCode">Cód segurança</label>
-                  <input type="text" id="securityCode"  {...register("paymentData.securityCode", { required: true })} />
+                  <input type="text" id="securityCode"  {...register("paymentData.securityCode")} />
                 </div>
                 <div className="card-name">
                   <label htmlFor="cardName">Nome no cartão</label>
-                  <input type="text" id="cardName" {...register("paymentData.cardName", { required: true })} />
+                  <input type="text" id="cardName" {...register("paymentData.cardName")} />
                 </div>
                 <div className="exp-date">
                   <label htmlFor="">Validade</label>
                   <div className="expiration-date">
-                    <select id="month"  {...register("paymentData.expirationMonth", { required: true })}>
+                    <select id="month"  {...register("paymentData.expirationMonth")}>
                       <option value="" selected disabled hidden>Mês</option>
                       {months.map(item => {
                         return (
@@ -154,7 +203,7 @@ export function Cart() {
                         )
                       })}
                     </select>
-                    <select id="year" {...register("paymentData.expirationYear", { required: true })}>
+                    <select id="year" {...register("paymentData.expirationYear")}>
                       <option value="" selected disabled hidden>Ano</option>
                       {years.map(item => {
                         return (
@@ -166,10 +215,10 @@ export function Cart() {
                 </div>
                 <div className="portion-input">
                   <label htmlFor="">Número de parcelas</label>
-                  <select id="portion" {...register("paymentData.portion", { required: true })}>
+                  <select id="portion" {...register("paymentData.portion")}>
                     {paymentOptions.map(item => {
                       return (
-                        <option value={item}>{item}</option>
+                        <option value={item.portion}>{`${item.name} - ${formatPrice(totalValue / item.portion)}`}</option>
                       )
                     })}
                   </select>
@@ -214,13 +263,13 @@ export function Cart() {
             <div className="ticket-form">
               <h4>Boleto</h4>
             </div>
-          </form>
+          </div>
         </div>
-        <div className="payment-btn">
+        <form onSubmit={handleSubmit(onSubmit)} className="payment-btn">
           <button className="general-btn">
             Finalizar Pedido
           </button>
-        </div>
+        </form>
       </div>
     </div>
   )

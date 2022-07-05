@@ -1,12 +1,54 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { createContext, ReactNode, useEffect } from "react"
-import { usePersistedState } from "../../utils/usePersistedState";
+import api from "../../services/api";
+
+export type Address = {
+  idaddress?: number;
+  name: string;
+  address: string;
+  district: string;
+  city: string;
+  state: string;
+  country: string;
+  cep: string;
+  status: string;
+}
+
+type User = {
+  iduser?: number;
+  email: string;
+  pwd: string;
+  name: string;
+  gender: string;
+  telephone: string;
+  cpf: string;
+  status: string;
+  address: Address[];
+}
+
+type RegisterUser = {
+  iduser?: number;
+  email: string;
+  pwd: string;
+  name: string;
+  gender: string;
+  telephone: string;
+  cpf: string;
+  status: string;
+  address: Address;
+}
+
+type Login = {
+  email: string;
+  pwd: string;
+}
 
 type AuthContextType = {
-  theme: string;
-  handleSexShop(): void;
-  handleRemoveSexShop(): void;
-  handleNight(): void;
+  user: User;
+  token: string;
+  handleLogin(login: Login): void;
+  handleRegister(user: RegisterUser): void;
+  handleSignOut(): void;
 }
 
 type AuthContextProps = {
@@ -15,48 +57,74 @@ type AuthContextProps = {
 
 export const AuthContext = createContext({} as AuthContextType)
 
-export function StyleContextProvider({ children }: AuthContextProps) {
-  const [theme, setTheme] = usePersistedState<string>('theme', 'dark')
+export function AuthContextProvider({ children }: AuthContextProps) {
+  const TOKEN_KEY = "@exotica-Token";
+  const [user, setUser] = useState<User>({} as User);
+  const [token, setToken] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  async function handleLogin(login: Login) {
+    const response = await api.post('http://52.72.116.213:3000/user/login', JSON.stringify(login), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      setToken(res.data.token);
+      setUser(res.data.user[0]);
+      localStorage.setItem(TOKEN_KEY, JSON.stringify(res.data.token));
+      localStorage.setItem('user', JSON.stringify(res.data.user[0]));
+      alert("Logado(a) com sucesso!")
+    }).catch(e => alert(e));
+  }
+
+  async function handleRegister(user: RegisterUser) {
+    console.log(user);
+    const response = await api.post('http://52.72.116.213:3000/user', JSON.stringify(user), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      alert("Cadastrado(a) com sucesso!")
+    })
+  }
+  async function handleCheckLogin() {
+    setLoading(true);
+    const userData = await JSON.parse(localStorage.getItem('user') || '[]');
+    const tokenData = await JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]')
+    userData && setUser(userData);
+    tokenData && setToken(tokenData);
+    setLoading(false);
+  }
+
+  function getUser() {
+    const userData = JSON.parse(localStorage.getItem('user') || '[]');
+    userData && setUser(userData);
+  }
+
+
+  async function handleSignOut() {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem('user')
+    setUser({} as User)
+    setToken('')
+    alert("Você saiu!")
+  }
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark-mode')
-      document.documentElement.classList.remove('sexshop')
-    } else if (theme === 'sexshop') {
-      document.documentElement.classList.add('dark-mode')
-      document.documentElement.classList.add('sexshop')
-    }
-    else {
-      document.documentElement.classList.remove('dark-mode')
-      document.documentElement.classList.remove('sexshop')
-    }
-  }, [theme])
-
-  function handleSexShop() {
-    setTheme(theme === 'dark' ? 'sexshop' : 'dark');
-  }
-
-  function handleRemoveSexShop() {
-    setTheme(theme === 'sexshop' ? 'dark' : 'sexshop');
-  }
-
-  function handleNight() {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-    setTheme(theme === 'sexshop' ? 'light' : 'dark');
-    if (theme ==='dark' || theme === 'sexshop') {
-      setTheme('light');
-    } else {
-      setTheme('dark');
-    }
-  }
+    handleCheckLogin();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ theme, handleSexShop, handleRemoveSexShop, handleNight }}>
-      {children}
+    <AuthContext.Provider value={{ user, token, handleLogin, handleRegister, handleSignOut }}>
+      {
+        loading ?
+          <h1>Carregando</h1> :
+          children
+      }
     </AuthContext.Provider>
   )
 }
 
-export const useStyle = () => {
+export const useAuth = () => {
   return useContext(AuthContext)
 }
