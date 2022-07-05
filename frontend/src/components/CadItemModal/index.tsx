@@ -93,7 +93,7 @@ export function CadItemModal() {
         ]
       }
 
-    const response = await api.post('http://52.72.116.213:3000/product', JSON.stringify(newProduct), {
+    const response = await api.post('https://api.gvnrsbs.com.br/product', JSON.stringify(newProduct), {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': token
@@ -107,7 +107,7 @@ export function CadItemModal() {
           newImg.append('idproduct', idproduct)
           newImg.append('status', 'ACTIVE')
           newImg.append('image', image)
-          const response = await api.post('http://52.72.116.213:3000/product/images', newImg, {
+          const response = await api.post('https://api.gvnrsbs.com.br/product/images', newImg, {
             headers: {
               'x-access-token': token
             }

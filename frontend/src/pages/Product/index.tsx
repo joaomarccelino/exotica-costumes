@@ -75,7 +75,7 @@ export function Product() {
       text: data.comment
     }
 
-    const response = await api.post('http://52.72.116.213:3000/product/comment', JSON.stringify(newComment), {
+    const response = await api.post('https://api.gvnrsbs.com.br/product/comment', JSON.stringify(newComment), {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': token

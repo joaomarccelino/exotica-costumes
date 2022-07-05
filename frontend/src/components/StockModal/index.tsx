@@ -46,7 +46,7 @@ export function StockModal() {
       ]
     }
 
-    const response = await api.post('http://52.72.116.213:3000/product/stock', JSON.stringify(newStock), {
+    const response = await api.post('https://api.gvnrsbs.com.br/product/stock', JSON.stringify(newStock), {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': token

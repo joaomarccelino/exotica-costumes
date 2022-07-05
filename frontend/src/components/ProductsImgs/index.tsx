@@ -11,7 +11,7 @@ type ProductImgsProps = {
 export function ProductImgs({images}: ProductImgsProps) {
 
   const thumbs = document.querySelectorAll('.thumbImg');
-  const imgBaseURL = 'http://52.72.116.213:3000'
+  const imgBaseURL = 'https://api.gvnrsbs.com.br'
 
   function selectImage(e: any) {
     const showImg = document.querySelector('.mainProductImg') as HTMLImageElement;

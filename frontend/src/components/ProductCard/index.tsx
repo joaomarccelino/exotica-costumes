@@ -26,7 +26,7 @@ export function ProductCard({ id, name, category, subcategory, images, price, st
   const [itemFlag, setItemFlag] = useState(flagged);
   const portion = (price / 3);
   const url = name.toLowerCase().replaceAll(' ', '-');
-  const imgBaseURL = 'http://52.72.116.213:3000';
+  const imgBaseURL = 'https://api.gvnrsbs.com.br';
 
   const newFav = { id: product.id, name: product.name, images: product.images, price: product.price }
 

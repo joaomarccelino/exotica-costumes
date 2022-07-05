@@ -66,7 +66,7 @@ export function Cart() {
       pay: {...data.paymentData, type: paymentMethod},
       products: orderItems
     }
-    const response = await api.post('http://52.72.116.213:3000/order/', JSON.stringify(newOrder), {
+    const response = await api.post('https://api.gvnrsbs.com.br/order/', JSON.stringify(newOrder), {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': token

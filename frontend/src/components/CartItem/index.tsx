@@ -55,7 +55,7 @@ export function CartItem({ id, image, price, quantity, size, name, showDelete, o
     <div className="cart-item">
       <div className="cart-left">
         <div className="cart-info">
-          <img src={`http://52.72.116.213:3000/${image}`} alt="" />
+          <img src={`https://api.gvnrsbs.com.br/${image}`} alt="" />
           <span>{formatPrice(price)}</span>
         </div>
         <div><span className={"item-name"}>{name}</span></div>

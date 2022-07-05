@@ -26,7 +26,7 @@ export function FavItem({ images, price, name, id }: FavItemProps) {
     <div className="fav-item">
       <div className="fav-content">
         <div className="fav-info">
-          <img src={`http://52.72.116.213:3000/${images[0]}`} alt="" />
+          <img src={`https://api.gvnrsbs.com.br/${images[0]}`} alt="" />
           <span>{formatPrice(price)}</span>
         </div>
         <div><span className={"item-name"}>{name}</span></div>

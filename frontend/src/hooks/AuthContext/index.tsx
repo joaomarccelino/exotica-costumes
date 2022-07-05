@@ -64,7 +64,7 @@ export function AuthContextProvider({ children }: AuthContextProps) {
   const [loading, setLoading] = useState<boolean>(false);
 
   async function handleLogin(login: Login) {
-    const response = await api.post('http://52.72.116.213:3000/user/login', JSON.stringify(login), {
+    const response = await api.post('https://api.gvnrsbs.com.br/user/login', JSON.stringify(login), {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -79,7 +79,7 @@ export function AuthContextProvider({ children }: AuthContextProps) {
 
   async function handleRegister(user: RegisterUser) {
     console.log(user);
-    const response = await api.post('http://52.72.116.213:3000/user', JSON.stringify(user), {
+    const response = await api.post('https://api.gvnrsbs.com.br/user', JSON.stringify(user), {
       headers: {
         'Content-Type': 'application/json'
       }

@@ -131,7 +131,7 @@ export function Header() {
               </button>
             </div>
             <MobileActions
-              isAuth
+              isAuth={(user.status === 'ACTIVE' || user.status === 'ADM')}
               handleShowFav={handleShowFav}
               handleShowCart={handleShowCart}
               handleShowSignIn={handleShowSignIn}
