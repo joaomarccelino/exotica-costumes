@@ -9,6 +9,10 @@ type Size = {
   quantity: number;
 }
 
+type UserAge = {
+  validated: boolean;
+}
+
 type Comment = {
   id: string;
   idproduct: string;
@@ -55,6 +59,7 @@ type ProductContextProps = {
 export const ProductContext = createContext({} as ProductContextType)
 
 export function ProductContextProvider({ children }: ProductContextProps) {
+  const [validatedAge, setValidatedAge] = useState<UserAge>();
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [allProducts, setAllProducts] = useState<ProductProps[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<ProductProps>(products[0]);

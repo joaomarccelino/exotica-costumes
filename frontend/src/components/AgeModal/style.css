@@ -29,6 +29,11 @@
   position: relative;
 }
 
+.age-form label {
+  color: var(--g11);
+  font-weight: bold;
+}
+
 .age-form input {
   display: block;
 }

@@ -8,7 +8,7 @@ import { useProducts } from '../../hooks/ProductContext';
 
 export function AgeModal() {
   const [birthDay, setBirthDay] = useState<Date>();
-  const {handleGetSexShopItems} = useProducts();
+  const { handleGetSexShopItems } = useProducts();
   const { handleSexShop } = useStyle();
 
   function handleHideAgeModal() {
@@ -28,15 +28,27 @@ export function AgeModal() {
     }
   }
 
+  function closeModal() {
+    const modal = document.querySelector('.age-modal');
+    modal?.classList.remove('active');
+  }
+
   return (
     <div className="age-modal">
       <div className="age-form">
-        <DatePicker selected={birthDay} onChange={(date:Date) => setBirthDay(date)} />
+        <label htmlFor="date">Data de nascimento</label>
+        <input type="date" onChange={(e) => { setBirthDay(new Date(e.target.value)) }} />
         <button
           className="general-btn"
           onClick={() => calcAge()}
         >
           Confirme sua idade
+        </button>
+        <button
+          className="cad-close-button"
+          onClick={() => closeModal()}
+        >
+          X
         </button>
       </div>
     </div>

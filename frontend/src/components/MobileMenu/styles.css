@@ -13,7 +13,8 @@
   padding: 20px;
 }
 
-.mob-categories a, .mob-sexshop-categories a {
+.mob-categories button, .mob-sexshop-categories button {
+  font: 400 1rem/1.5 'Fira Sans', sans-serif;
   color: var(--g13);
 }
 
