@@ -16,17 +16,10 @@ type SizeInputs = {
 export function StockModal() {
   const { token } = useAuth();
   const { selectedProduct } = useProducts();
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<SizeInputs>({
-    defaultValues: {
-      quantity1: selectedProduct?.stock[0].quantity || 0,
-      quantity2: selectedProduct?.stock[1].quantity || 0,
-      quantity3: selectedProduct?.stock[2].quantity || 0,
-      quantity4: selectedProduct?.stock[3].quantity || 0
-    }
-  });
+  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<SizeInputs>();
   const onSubmit: SubmitHandler<SizeInputs> = async data => {
     const newStock = {
-      productId: selectedProduct.id,
+      idproduct: selectedProduct.id,
       stock: [
         {
           size: selectedProduct?.stock[0].size,
@@ -47,18 +40,28 @@ export function StockModal() {
       ]
     }
 
-    const response = await api.post(`${baseURL}/product/stock`, JSON.stringify(newStock), {
+    const response = await api.patch(`${baseURL}/product/stock`, JSON.stringify(newStock), {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': token
       }
     })
-      .then(res => { console.log(res) })
+      .then(res => { 
+        console.log(res)
+        alert("Estoque atualizado!")
+        reset()
+        closeModal();
+       })
+  }
+
+  function closeModal() {
+    const modal = document.querySelector('.stock-modal-bg')
+    modal?.classList.remove('active');
   }
 
   return (
     <div className="stock-modal-bg">
-      <form onSubmit={handleSubmit(onSubmit)} className="stock-modal">
+      <div className="stock-modal">
         <h1>Atualizar Estoque</h1>
         <h2>{selectedProduct?.name}</h2>
         <div className="stock-form">
@@ -69,6 +72,7 @@ export function StockModal() {
             <label htmlFor="quantity1">Quantidade</label>
             <input
               {...register("quantity1")}
+              defaultValue={selectedProduct?.stock[0].quantity}
               type="number" name="quantity1" id="quantity1" min={0}
             />
           </div>
@@ -81,6 +85,7 @@ export function StockModal() {
             <label htmlFor="quantity2">Quantidade</label>
             <input
               {...register("quantity2")}
+              defaultValue={selectedProduct?.stock[1].quantity}
               type="number" name="quantity2" id="quantity2" min={0}
             />
           </div>
@@ -93,6 +98,7 @@ export function StockModal() {
             <label htmlFor="quantity3">Quantidade</label>
             <input
               {...register("quantity3")}
+              defaultValue={selectedProduct?.stock[2].quantity}
               type="number" name="quantity3" id="quantity3" min={0}
             />
           </div>
@@ -105,14 +111,21 @@ export function StockModal() {
             <label htmlFor="quantity4">Quantidade</label>
             <input
               {...register("quantity4")}
+              defaultValue={selectedProduct?.stock[3].quantity}
               type="number" name="quantity4" id="quantity4" min={0}
             />
           </div>
         </div>
-        <div className="stock-btn">
+        <form className="stock-btn" onSubmit={handleSubmit(onSubmit)}>
           <button className="general-btn">Atualizar</button>
-        </div>
-      </form>
+        </form>
+        <button
+          className="close-button"
+          onClick={() => closeModal()}
+        >
+          X
+        </button>
+      </div>
     </div>
   )
 }

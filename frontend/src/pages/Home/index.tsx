@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Spotlight from '../../assets/img/spotlight.png';
 import { CadItemModal } from '../../components/CadItemModal';
+import { DeleteModal } from '../../components/DeleteModal';
 import { ProductCard } from '../../components/ProductCard';
 import { StockModal } from '../../components/StockModal';
 import { useAuth } from '../../hooks/AuthContext';
@@ -54,7 +55,10 @@ export function Home() {
       <CadItemModal />
       {
         selectedProduct &&
-        <StockModal />
+        <>
+          <StockModal />
+          <DeleteModal />
+        </>
       }
     </main>
 

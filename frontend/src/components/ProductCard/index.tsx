@@ -13,7 +13,7 @@ import { baseURL } from "../../utils/commonData";
 
 export function ProductCard({ id, name, category, subcategory, images, price, stock, description, comments, flagged }: ProductProps) {
   const { user } = useAuth();
-  const { handleSetSelectedItem, handleAddFavItem } = useProducts();
+  const { handleSetSelectedItem, handleSetDeletedItem, handleAddFavItem } = useProducts();
   const adm = (user.status === 'ADM');
   const product = ({
     id,
@@ -52,20 +52,19 @@ export function ProductCard({ id, name, category, subcategory, images, price, st
   }
 
   function handleDeleteItem() {
-    // confirmAlert({
-    //   title: 'Apagar Item',
-    //   message: 'Você deseja: ',
-    //   buttons: [
-    //     {
-    //       label: 'Inativar item',
-    //       onClick: handleEditItem
-    //     },
-    //     {
-    //       label: 'Apagar item',
-    //       onClick: () => alert('Click No')
-    //     }
-    //   ]
-    // });
+    const delProduct = {
+      id,
+      name,
+      category,
+      subcategory,
+      images,
+      price,
+      stock,
+      description,
+      comments,
+      flagged
+    }
+    handleSetDeletedItem(delProduct);
   };
 
   return (

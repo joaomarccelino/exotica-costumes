@@ -9,10 +9,6 @@ type Size = {
   quantity: number;
 }
 
-type UserAge = {
-  validated: boolean;
-}
-
 type Comment = {
   id: string;
   idproduct: string;
@@ -38,6 +34,7 @@ export type ProductProps = {
 type ProductContextType = {
   products: ProductProps[];
   selectedProduct: ProductProps;
+  deletedProduct: ProductProps;
   cartItems: CartItemProps[];
   favItems: FavItemProps[];
   handleAddItemToCart(cartItem: CartItemProps): void;
@@ -46,10 +43,9 @@ type ProductContextType = {
   handleUpdateFav(newItems: FavItemProps[]): void;
   handleFilterBySubCategory(subcategory: string): void;
   handleSetSelectedItem(item: ProductProps): void;
+  handleSetDeletedItem(item: ProductProps): void;
   handleGetLingerieItems(): void;
   handleGetSexShopItems(): void;
-  handleDeleteItem(): void;
-  handleInactivateItem(): void;
   getProducts(): void;
 }
 
@@ -60,10 +56,10 @@ type ProductContextProps = {
 export const ProductContext = createContext({} as ProductContextType)
 
 export function ProductContextProvider({ children }: ProductContextProps) {
-  const [validatedAge, setValidatedAge] = useState<UserAge>();
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [allProducts, setAllProducts] = useState<ProductProps[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<ProductProps>(products[0]);
+  const [deletedProduct, setDeletedProduct] = useState<ProductProps>(products[0]);
   const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
   const [favItems, setFavItems] = useState<FavItemProps[]>([]);
 
@@ -134,12 +130,10 @@ export function ProductContextProvider({ children }: ProductContextProps) {
     stockModal?.classList.add('active');
   }
 
-  function handleDeleteItem() {
-
-  }
-
-  function handleInactivateItem() {
-
+  function handleSetDeletedItem(item: ProductProps) {
+    setDeletedProduct(item);
+    const delMoral = document.querySelector('.del-modal-bg')
+    delMoral?.classList.add('active');
   }
 
   return (
@@ -148,6 +142,7 @@ export function ProductContextProvider({ children }: ProductContextProps) {
         {
           products,
           selectedProduct,
+          deletedProduct,
           cartItems,
           favItems,
           handleAddItemToCart,
@@ -156,10 +151,9 @@ export function ProductContextProvider({ children }: ProductContextProps) {
           handleUpdateFav,
           handleFilterBySubCategory,
           handleSetSelectedItem,
+          handleSetDeletedItem,
           handleGetLingerieItems,
           handleGetSexShopItems,
-          handleDeleteItem,
-          handleInactivateItem,
           getProducts
         }}>
       {children}

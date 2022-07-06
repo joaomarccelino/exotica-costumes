@@ -1,4 +1,4 @@
-.stock-modal-bg {
+.del-modal-bg {
   height: 100vh;
   width: 100%;
   position: fixed;
@@ -11,12 +11,12 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-.stock-modal-bg.active {
+.del-modal-bg.active {
   display: initial;
   background: rgba(0, 0, 0, 0.5);
 }
 
-.stock-modal {
+.del-modal {
   padding: 40px 40px;
   background: var(--g2);
   max-width: 360px;
@@ -25,51 +25,26 @@
   position: relative;
 }
 
-.stock-modal h1 {
+.del-modal h1 {
   font-size: 1.5rem;
   text-align: center;
   color: var(--g11);
   margin-bottom: 40px;
 }
 
-.stock-modal h2 {
+.del-modal h2 {
   font-size: 1.125rem;
   text-align: center;
   color: var(--g11);
   margin-bottom: 40px;
 }
 
-.stock-form {
+
+.del-form {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 30px;
+  margin-top: 20px;
   margin-bottom: 20px;
-}
-
-.stock-form input, .stock-form label {
-  color: var(--g11);
-  margin-left: 12px;
-}
-
-.stock-form span {
-  color: var(--g1);
-  font-weight: bold;
-}
-
-.stock-form-size {
-  background: var(--p3);
-  width: 40px;
-  text-align: center;
-  padding: 12px;
-  border-radius: 4px;
-}
-
-.stock-form-quantity input {
-  font: 400 1rem/1.5 'Fira Sans', sans-serif;
-  color: var(--g1);
-}
-
-.stock-btn {
-  text-align: center;
 }

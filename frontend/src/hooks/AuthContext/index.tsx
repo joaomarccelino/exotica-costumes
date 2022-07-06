@@ -105,6 +105,8 @@ export function AuthContextProvider({ children }: AuthContextProps) {
   async function handleSignOut() {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem('user')
+    localStorage.removeItem('cartItem')
+    localStorage.removeItem('favItem')
     setUser({} as User)
     setToken('')
     alert("Você saiu!")
