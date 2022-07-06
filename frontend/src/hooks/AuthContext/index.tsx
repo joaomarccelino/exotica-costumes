@@ -79,7 +79,6 @@ export function AuthContextProvider({ children }: AuthContextProps) {
   }
 
   async function handleRegister(user: RegisterUser) {
-    console.log(user);
     const response = await api.post(`${baseURL}/user`, JSON.stringify(user), {
       headers: {
         'Content-Type': 'application/json'

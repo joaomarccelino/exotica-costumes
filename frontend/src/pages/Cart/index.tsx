@@ -73,7 +73,6 @@ export function Cart() {
       }
     })
       .then(res => {
-        console.log(res);
         alert("Pedido enviado!");
         localStorage.removeItem('cartItem');
         navigate('/');

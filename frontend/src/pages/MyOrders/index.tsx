@@ -31,7 +31,6 @@ export function MyOrders() {
   const { user, token } = useAuth();
   const [orders, setOrders] = useState<Order[]>();
   async function getOrders() {
-    console.log(token);
     const response = await api.get(`/order/${user.iduser}`, {
       headers: {
         'x-access-token': token,
@@ -39,7 +38,6 @@ export function MyOrders() {
       }
     });
     const data = response.data.orders;
-    console.log(response.data.orders);
     setOrders(data);
   }
 

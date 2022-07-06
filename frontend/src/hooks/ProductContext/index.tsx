@@ -71,7 +71,6 @@ export function ProductContextProvider({ children }: ProductContextProps) {
     const response = await api.get('/product');
     const data = response.data.response.products;
     const filteredData = data.filter((item: ProductProps) => item.category === "Moda Íntima");
-    console.log(data);
     setAllProducts(data);
     setProducts(filteredData);
   }
@@ -100,7 +99,6 @@ export function ProductContextProvider({ children }: ProductContextProps) {
   function handleUpdateCart(newItems: CartItemProps[]) {
     localStorage.setItem('cartItem', JSON.stringify(newItems));
     setCartItems(newItems);
-    alert("Carrinho atualizado!");
   }
 
   function handleUpdateFav(newItems: FavItemProps[]) {
