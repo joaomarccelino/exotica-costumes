@@ -118,6 +118,14 @@ a {
   opacity: 0.8;
 }
 
+button:hover {
+  opacity: 0.8;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
 :root.dark-mode.sexshop .general-btn {
   background: var(--p1);
 }

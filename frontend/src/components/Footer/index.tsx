@@ -31,18 +31,18 @@ export function Footer() {
         <div className="contact">
           <h3>Contato</h3>
           <div className="social-icons">
-            <button className="empty-btn">
+            <a href="https://www.whatsapp.com/" className="empty-btn">
               <BsWhatsapp size={24} color={"var(--p4)"} />
-            </button>
-            <button className="empty-btn">
+            </a>
+            <a href="https://www.instagram.com/exoticacostumes/"  className="empty-btn">
               <BsInstagram size={24} color={"var(--p4)"} />
-            </button>
-            <button className="empty-btn">
+            </a>
+            <a href="mailto:joao.marcelino.esc@gmail.com"  className="empty-btn">
               <CgMail size={24} color={"var(--p4)"} />
-            </button>
-            <button className="empty-btn">
+            </a>
+            <a href="https://www.facebook.com/exotca.costumes"  className="empty-btn">
               <BsFacebook size={24} color={"var(--p4)"} />
-            </button>
+            </a>
           </div>
         </div>
       </div>
