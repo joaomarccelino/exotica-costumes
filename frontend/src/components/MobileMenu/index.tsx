@@ -7,7 +7,7 @@ import { useProducts } from "../../hooks/ProductContext";
 
 export function MobileMenu() {
   const [active, setActive] = useState(false);
-  const { theme, handleSexShop, handleRemoveSexShop, handleNight } = useStyle();
+  const { theme, handleRemoveSexShop} = useStyle();
   const { handleFilterBySubCategory } = useProducts();
 
   function handleShowAgeModal() {

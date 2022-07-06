@@ -180,4 +180,8 @@
   .product-info {
     margin-top: 40px;
   }
+
+  .add-eval textarea {
+    width: 90%;
+  }
 }

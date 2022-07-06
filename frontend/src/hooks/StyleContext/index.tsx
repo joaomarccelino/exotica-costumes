@@ -18,7 +18,7 @@ export const StyleContext = createContext({} as SwitchContextType)
 
 export function StyleContextProvider({ children }: SwitchContextProps) {
   const [theme, setTheme] = usePersistedState<string>('theme', 'dark')
-  const {getProducts} = useProducts();
+  const {handleGetLingerieItems} = useProducts();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -40,7 +40,7 @@ export function StyleContextProvider({ children }: SwitchContextProps) {
 
   function handleRemoveSexShop() {
     setTheme(theme === 'sexshop' ? 'dark' : 'sexshop');
-    getProducts();
+    handleGetLingerieItems()
   }
 
   function handleNight() {

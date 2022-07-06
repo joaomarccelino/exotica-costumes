@@ -44,7 +44,6 @@ export function SignModal() {
     handleRegister(newRegister);
     closeModal();
     reset();
-
   }
 
   const onSubmit: SubmitHandler<SignInputs> = async data => {
@@ -53,6 +52,7 @@ export function SignModal() {
   function closeModal() {
     const modal = document.querySelector('.sign-bg')
     modal?.classList.remove('active');
+    setNewUser(false);
   }
   return (
     <div className="sign-bg">

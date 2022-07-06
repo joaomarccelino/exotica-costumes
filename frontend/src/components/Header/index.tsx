@@ -21,7 +21,7 @@ import { useAuth } from '../../hooks/AuthContext';
 export function Header() {
   const [subcategory, setSubcategory] = useState('');
   const { user } = useAuth();
-  const { theme, handleSexShop, handleRemoveSexShop, handleNight } = useStyle();
+  const { theme, handleRemoveSexShop, handleNight } = useStyle();
   const { handleFilterBySubCategory } = useProducts();
 
 

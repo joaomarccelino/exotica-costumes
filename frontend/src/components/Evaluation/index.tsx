@@ -1,5 +1,3 @@
-import Sign from '../../assets/img/sign-icon.svg';
-import { BiLike, BiDislike } from 'react-icons/bi';
 import {FaRegUser} from 'react-icons/fa';
 import './styles.css';
 
@@ -11,15 +9,6 @@ export type EvaluationProps = {
 }
 
 export function Evaluation({ iduser, name, date, text}: EvaluationProps) {
-
-  function handleSetLike() {
-
-  }
-
-  function handleSetDislike() {
-    
-  }
-
   return (
     <div className="evaluation-container">
       <div className="ev-profile">

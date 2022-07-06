@@ -6,7 +6,7 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import './styles.css';
 import { useState } from "react";
 import { Address } from "../../hooks/AuthContext";
-import { formatDate } from "../../utils/formatDate";
+import { shipping } from "../../utils/commonData";
 
 export type OrderProductProps = {
   category: string;
@@ -103,7 +103,7 @@ export function OrderItem(
                 )
               })}
             </div>
-            <ItemResume totalValue={total_price} shipping={125} />
+            <ItemResume totalValue={total_price} shipping={shipping} />
           </div>
         </div>
       }

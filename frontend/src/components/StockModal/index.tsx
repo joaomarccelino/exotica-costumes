@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from "../../hooks/AuthContext";
 import { useProducts } from "../../hooks/ProductContext";
 import api from "../../services/api";
+import { baseURL } from "../../utils/commonData";
 import './style.css';
 
 type SizeInputs = {
@@ -46,7 +47,7 @@ export function StockModal() {
       ]
     }
 
-    const response = await api.post('https://api.gvnrsbs.com.br/product/stock', JSON.stringify(newStock), {
+    const response = await api.post(`${baseURL}/product/stock`, JSON.stringify(newStock), {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': token

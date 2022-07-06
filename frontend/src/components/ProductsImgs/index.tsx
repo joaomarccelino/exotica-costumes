@@ -1,6 +1,4 @@
-import Prod1 from '../../assets/img/prod-test1.jpg';
-import Prod2 from '../../assets/img/prod-test2.jpg';
-import Prod3 from '../../assets/img/prod-test3.jpg';
+import { baseURL } from '../../utils/commonData';
 
 import './styles.css';
 
@@ -11,7 +9,6 @@ type ProductImgsProps = {
 export function ProductImgs({images}: ProductImgsProps) {
 
   const thumbs = document.querySelectorAll('.thumbImg');
-  const imgBaseURL = 'https://api.gvnrsbs.com.br'
 
   function selectImage(e: any) {
     const showImg = document.querySelector('.mainProductImg') as HTMLImageElement;
@@ -31,11 +28,11 @@ export function ProductImgs({images}: ProductImgsProps) {
 
   return (
     <div className="product-images">
-      <img src={`${imgBaseURL}/${images[0]}`} alt="Image 1" className="mainProductImg" />
+      <img src={`${baseURL}/${images[0]}`} alt="" className="mainProductImg" />
       <div className="product-thumbs">
-        <img src={`${imgBaseURL}/${images[0]}`} alt="" className="thumbImg selected-img" />
-        <img src={`${imgBaseURL}/${images[1]}`} alt="" className="thumbImg" />
-        <img src={`${imgBaseURL}/${images[2]}`} alt="" className="thumbImg" />
+        <img src={`${baseURL}/${images[0]}`} alt="" className="thumbImg selected-img" />
+        <img src={`${baseURL}/${images[1]}`} alt="" className="thumbImg" />
+        <img src={`${baseURL}/${images[2]}`} alt="" className="thumbImg" />
       </div>
     </div>
   )

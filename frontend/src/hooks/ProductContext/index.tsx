@@ -46,6 +46,7 @@ type ProductContextType = {
   handleUpdateFav(newItems: FavItemProps[]): void;
   handleFilterBySubCategory(subcategory: string): void;
   handleSetSelectedItem(item: ProductProps): void;
+  handleGetLingerieItems(): void;
   handleGetSexShopItems(): void;
   handleDeleteItem(): void;
   handleInactivateItem(): void;
@@ -63,7 +64,6 @@ export function ProductContextProvider({ children }: ProductContextProps) {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [allProducts, setAllProducts] = useState<ProductProps[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<ProductProps>(products[0]);
-  const [orders, setOrders] = useState([]);
   const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
   const [favItems, setFavItems] = useState<FavItemProps[]>([]);
 
@@ -71,6 +71,7 @@ export function ProductContextProvider({ children }: ProductContextProps) {
     const response = await api.get('/product');
     const data = response.data.response.products;
     const filteredData = data.filter((item: ProductProps) => item.category === "Moda Íntima");
+    console.log(data);
     setAllProducts(data);
     setProducts(filteredData);
   }
@@ -114,6 +115,11 @@ export function ProductContextProvider({ children }: ProductContextProps) {
     alert("Favorito adicionado!");
   }
 
+  function handleGetLingerieItems() {
+    const linProducts = allProducts.filter(item => item.category === 'Moda Íntima');
+    setProducts(linProducts);
+  }
+
   function handleGetSexShopItems() {
     const sexShopProducts = allProducts.filter(item => item.category === 'SexShop');
     setProducts(sexShopProducts);
@@ -152,6 +158,7 @@ export function ProductContextProvider({ children }: ProductContextProps) {
           handleUpdateFav,
           handleFilterBySubCategory,
           handleSetSelectedItem,
+          handleGetLingerieItems,
           handleGetSexShopItems,
           handleDeleteItem,
           handleInactivateItem,

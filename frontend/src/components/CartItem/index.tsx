@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useProducts } from '../../hooks/ProductContext';
+import { baseURL } from '../../utils/commonData';
 import { formatPrice } from '../../utils/formatPrice';
 
 import './styles.css';
@@ -55,7 +56,7 @@ export function CartItem({ id, image, price, quantity, size, name, showDelete, o
     <div className="cart-item">
       <div className="cart-left">
         <div className="cart-info">
-          <img src={`https://api.gvnrsbs.com.br/${image}`} alt="" />
+          <img src={`${baseURL}/${image}`} alt="" />
           <span>{formatPrice(price)}</span>
         </div>
         <div><span className={"item-name"}>{name}</span></div>

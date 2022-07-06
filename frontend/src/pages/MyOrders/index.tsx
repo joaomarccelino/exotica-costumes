@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { CartItemProps } from "../../components/CartItem";
 import { OrderItem, OrderProductProps } from "../../components/OrderItem"
 import { Address, useAuth } from "../../hooks/AuthContext";
 import api from "../../services/api";

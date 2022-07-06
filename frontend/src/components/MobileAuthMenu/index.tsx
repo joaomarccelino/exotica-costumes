@@ -3,8 +3,8 @@ import { FaRegUser } from "react-icons/fa";
 import './styles.css';
 export function MobileAuthMenu() {
   function handleShowSubMenu() {
-    const cartModal = document.querySelector('.user-menu')
-    cartModal?.classList.toggle('active');
+    const userMenu = document.querySelector('.mob-user-menu')
+    userMenu?.classList.toggle('active');
   }
   return (
     <div>
@@ -14,7 +14,7 @@ export function MobileAuthMenu() {
         </div>
         <span>Olá João!</span>
       </button>
-      <div className="user-menu">
+      <div className="mob-user-menu">
         <ul>
           <li>
             <a href="/meus-dados">

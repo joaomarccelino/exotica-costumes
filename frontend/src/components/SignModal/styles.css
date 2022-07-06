@@ -107,3 +107,21 @@
     top: 0;    
   }
 }
+
+@media (max-width: 800px) {
+  .sign-modal {
+    padding: 20px 80px 20px 80px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sign-modal {
+    padding: 10px 40px 40px 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sign-modal {
+    padding: 10px 20px 40px 20px;
+  }
+}

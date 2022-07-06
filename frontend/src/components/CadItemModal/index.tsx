@@ -3,13 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from "../../hooks/AuthContext";
 import { useProducts } from "../../hooks/ProductContext";
 import api from "../../services/api";
-import { sizePatternP, sizePatternN, categories, subCategories } from '../../utils/commonData';
+import { sizePatternP, sizePatternN, categories, subCategories, baseURL } from '../../utils/commonData';
 import './styles.css';
-
-type Sizes = {
-  size: string;
-  quantity: number;
-}
 
 type Inputs = {
   name: string;
@@ -93,7 +88,7 @@ export function CadItemModal() {
         ]
       }
 
-    const response = await api.post('https://api.gvnrsbs.com.br/product', JSON.stringify(newProduct), {
+    const response = await api.post(`${baseURL}/product`, JSON.stringify(newProduct), {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': token
@@ -107,7 +102,7 @@ export function CadItemModal() {
           newImg.append('idproduct', idproduct)
           newImg.append('status', 'ACTIVE')
           newImg.append('image', image)
-          const response = await api.post('https://api.gvnrsbs.com.br/product/images', newImg, {
+          const response = await api.post(`${baseURL}/product/images`, newImg, {
             headers: {
               'x-access-token': token
             }

@@ -4,7 +4,7 @@ import { BsCreditCard } from 'react-icons/bs';
 import { CgRadioCheck, CgRadioChecked } from 'react-icons/cg';
 import { RiBillLine } from 'react-icons/ri';
 
-import { months, years, paymentOptions, shipping } from '../../utils/commonData';
+import { months, years, paymentOptions, shipping, baseURL } from '../../utils/commonData';
 import { CartItem } from '../../components/CartItem';
 import './styles.css';
 import { useProducts } from '../../hooks/ProductContext';
@@ -66,7 +66,7 @@ export function Cart() {
       pay: {...data.paymentData, type: paymentMethod},
       products: orderItems
     }
-    const response = await api.post('https://api.gvnrsbs.com.br/order/', JSON.stringify(newOrder), {
+    const response = await api.post(`${baseURL}/order/`, JSON.stringify(newOrder), {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': token

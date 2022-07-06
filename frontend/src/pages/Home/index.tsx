@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Spotlight from '../../assets/img/spotlight.png';
 import { CadItemModal } from '../../components/CadItemModal';
 import { ProductCard } from '../../components/ProductCard';
@@ -8,7 +8,6 @@ import { useProducts } from '../../hooks/ProductContext';
 import './styles.css';
 
 export function Home() {
-  const [loading, setLoading] = useState<boolean>(false);
   const { favItems, products, selectedProduct } = useProducts();
   const { user } = useAuth();
   const adm = true;

@@ -18,7 +18,7 @@ export function MobileActions(
     handleShowCart,
     handleShowFav
   }: MobileActionsProps) {
-  const { theme, handleSexShop, handleRemoveSexShop, handleNight } = useStyle();
+  const { handleNight } = useStyle();
   return (
     <div className="mobile-actions">
     {

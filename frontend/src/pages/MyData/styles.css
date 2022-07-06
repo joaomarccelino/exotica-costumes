@@ -79,3 +79,20 @@
   text-align: center;
   margin-bottom: 40px;
 }
+
+@media (max-width: 700px) {
+  .data-form {
+    padding: 20px 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .data-form {
+    padding: 10px 10px;
+  }
+
+  .data-form .tel-cpf {
+    justify-content: center;
+    gap: 30px;
+  }
+}

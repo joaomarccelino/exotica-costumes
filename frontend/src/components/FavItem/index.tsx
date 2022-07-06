@@ -1,5 +1,6 @@
 import { AiOutlineHeart } from 'react-icons/ai';
 import { useProducts } from '../../hooks/ProductContext';
+import { baseURL } from '../../utils/commonData';
 import { formatPrice } from '../../utils/formatPrice';
 
 import './styles.css';
@@ -26,7 +27,7 @@ export function FavItem({ images, price, name, id }: FavItemProps) {
     <div className="fav-item">
       <div className="fav-content">
         <div className="fav-info">
-          <img src={`https://api.gvnrsbs.com.br/${images[0]}`} alt="" />
+          <img src={`${baseURL}/${images[0]}`} alt="" />
           <span>{formatPrice(price)}</span>
         </div>
         <div><span className={"item-name"}>{name}</span></div>

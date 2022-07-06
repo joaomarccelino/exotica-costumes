@@ -9,6 +9,7 @@ import { ProductProps, useProducts } from "../../hooks/ProductContext";
 import { AdmCardButtons } from "../AdmCardButtons";
 import { useAuth } from "../../hooks/AuthContext";
 import { confirmAlert } from "react-confirm-alert";
+import { baseURL } from "../../utils/commonData";
 
 export function ProductCard({ id, name, category, subcategory, images, price, stock, description, comments, flagged }: ProductProps) {
   const { user } = useAuth();
@@ -25,8 +26,7 @@ export function ProductCard({ id, name, category, subcategory, images, price, st
   })
   const [itemFlag, setItemFlag] = useState(flagged);
   const portion = (price / 3);
-  const url = name.toLowerCase().replaceAll(' ', '-');
-  const imgBaseURL = 'https://api.gvnrsbs.com.br';
+  const url = name.toLowerCase().replaceAll(' ', '-'); 
 
   const newFav = { id: product.id, name: product.name, images: product.images, price: product.price }
 
@@ -71,7 +71,7 @@ export function ProductCard({ id, name, category, subcategory, images, price, st
   return (
     <div className="product-card">
       <Link to={`/${url}`} state={{ product }}>
-        <img src={`${imgBaseURL}/${images[2]}`} alt={name} />
+        <img src={`${baseURL}/${images[2]}`} alt={name} />
       </Link>
       <span className="card-prod-price">{formatPrice(price)}</span>
       <p>em <span className="color-text">{`até 3x de ${formatPrice(portion)} sem juros`}</span></p>

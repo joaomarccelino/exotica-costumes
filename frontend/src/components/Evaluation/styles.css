@@ -56,6 +56,9 @@
 }
 
 @media (max-width: 800px) {
+  .evaluation-container {
+    padding: 0 40px;
+  }
   .ev-profile p,  .ev-text blockquote {
     font-size: 0.75rem;
   }

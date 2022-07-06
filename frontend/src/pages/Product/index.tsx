@@ -12,6 +12,8 @@ import { ProductProps, useProducts } from '../../hooks/ProductContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAuth } from '../../hooks/AuthContext';
 import api from '../../services/api';
+import { baseURL } from '../../utils/commonData';
+import { formatDate } from '../../utils/formatDate';
 
 type ProductData = {
   product: ProductProps;
@@ -23,6 +25,13 @@ type CommentInput = {
 
 
 export function Product() {
+  const location = useLocation();
+
+  const data = location.state as ProductData;
+
+  const product = data.product;
+
+  const [comments, setComments] = useState([...product.comments] || []);
   const [size, setSize] = useState<number | string>(0);
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<CommentInput>();
   const [quantity, setQuantity] = useState(0);
@@ -33,11 +42,6 @@ export function Product() {
 
   const { handleAddItemToCart, handleAddFavItem } = useProducts();
 
-  const location = useLocation();
-
-  const data = location.state as ProductData;
-
-  const product = data.product;
 
   function selectSize(size: number | string) {
     const sizes = document.querySelectorAll('.size');
@@ -75,13 +79,24 @@ export function Product() {
       text: data.comment
     }
 
-    const response = await api.post('https://api.gvnrsbs.com.br/product/comment', JSON.stringify(newComment), {
+    const newComment2 = {
+      idproduct: product.id,
+      iduser: user.iduser?.toString() || '',
+      name: user.name,
+      text: data.comment,
+      id: '56',
+      date: formatDate(new Date())
+    }
+
+    const response = await api.post(`${baseURL}/product/comment`, JSON.stringify(newComment), {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': token
       }
     }).then(res => {
       alert("Comentário Adicionado!")
+      const newComments = [...comments, newComment2];
+      setComments(newComments);
       reset();
     })
       .catch(err => console.log(err));
@@ -152,7 +167,7 @@ export function Product() {
       <section className="container evaluations-container">
         <h2>Avaliações</h2>
         <div className="evaluations">
-          {product.comments?.map((item, index) => {
+          {comments?.map((item, index) => {
             return (
               <Evaluation
                 key={index}
