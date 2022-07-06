@@ -25,11 +25,11 @@ export function MobileActions(
       isAuth ?
         <MobileAuthMenu /> :
         <button
-          className="mob-login-btn header-btn"
+          className="mob-login-btn empty-btn"
           onClick={() => handleShowSignIn()}
         >
-          <div className="login-btn-icon">
-            <FaRegUser size={20} color={"var(--g12)"} />
+          <div className="mob-login-btn-icon">
+            <FaRegUser size={20} color={"var(--g1)"} />
           </div>
           <span>Login ou Cadastro</span>
         </button>
